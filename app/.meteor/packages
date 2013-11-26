@@ -6,3 +6,16 @@
 standard-app-packages
 preserve-inputs
 iron-router
+underscore
+coffeescript
+bootstrap3-less
+accounts-ui-bootstrap-3
+force-ssl
+jquery
+less
+accounts-base
+accounts-password
+spin
+flash-messages
+i18n
+font-awesome-4

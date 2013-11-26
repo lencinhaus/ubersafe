@@ -1,0 +1,74 @@
+<head>
+    <title>UberSafe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+</body>
+
+<template name="layout">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{pathFor 'home'}}">{{__ "client.nav.brand"}}</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav">
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{localeName locale}} <i class="fa fa-caret-down fa-fw"></i></a>
+                        <ul class="dropdown-menu">
+                            {{#each supportedLocales}}
+                            <li><a href="javascript:void(0)" data-locale="{{code}}" class="link-switch-locale">{{name}}{{#if isCurrentLocale code}} <i class="fa fa-check fa-fw"></i>{{/if}}</a></li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                    {{loginButtons align = "left"}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="notifications">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> flashMessages}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        {{yield}}
+    </div>
+</template>
+
+<template name="home">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>HI</h1>
+        </div>
+    </div>
+</template>
+
+<template name="loading">
+    <div class="row">
+        <div class="col-md-12 loading">
+            {{> spinner}}
+        </div>
+    </div>
+</template>
+
+<template name="notFound">
+    <h1>NOT FOUND</h1>
+</template>
