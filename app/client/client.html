@@ -15,7 +15,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{pathFor 'home'}}">{{__ "client.nav.brand"}}</a>
+                <a class="navbar-brand" href="{{pathFor 'dashboard'}}">{{appName}}</a>
             </div>
 
             <div class="navbar-collapse collapse">
@@ -32,7 +32,11 @@
                             {{/each}}
                         </ul>
                     </li>
-                    {{loginButtons align = "left"}}
+                    {{#if currentUser}}
+                    <li>
+                        <a href="javascript:void(0)" id="link-logout">{{__ "client.nav.logout"}}</a>
+                    </li>
+                    {{/if}}
                 </ul>
             </div>
         </div>
@@ -50,14 +54,6 @@
 
     <div class="container">
         {{yield}}
-    </div>
-</template>
-
-<template name="home">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>HI</h1>
-        </div>
     </div>
 </template>
 

@@ -1,0 +1,8 @@
+{
+    "public": {
+        "name": "UberSafe",
+        "password": {
+            "minLength": 6
+        }
+    }
+}

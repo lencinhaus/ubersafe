@@ -1,0 +1,4 @@
+[submodule "app/packages/parsleyjs-promises/parsleyjs"]
+	path = app/packages/parsleyjs-promises/parsleyjs
+	url = https://github.com/lencinhaus/Parsley.js.git
+	branch = promises

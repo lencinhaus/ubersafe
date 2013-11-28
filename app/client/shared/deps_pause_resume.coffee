@@ -1,14 +1,14 @@
 paused = false
 shouldFlush = false
-
 realFlush = Deps.flush
-Deps.flush = ->
-  if paused
-    shouldFlush = true
-  else
-    realFlush()
 
 _.extend Deps,
+  flush: ->
+    if paused
+      shouldFlush = true
+    else
+    realFlush()
+
   pause: ->
     if paused then return
     paused = true

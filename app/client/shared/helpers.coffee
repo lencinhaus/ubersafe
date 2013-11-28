@@ -1,6 +1,9 @@
+#i18n
 Handlebars.registerHelper "__", (message, params) ->
   new Handlebars.SafeString(__(message, params))
 
+
+# locales
 Handlebars.registerHelper "locale", ->
   language = "en"
   if Meteor.getLocale() then [language] = Meteor.getLocale().split "_"
@@ -23,3 +26,7 @@ Handlebars.registerHelper "isCurrentLocale", (locale) ->
 
 Handlebars.registerHelper "localeName", (locale) ->
   __ "locales.locale_#{locale}"
+
+# debug
+Handlebars.registerHelper "dump", (obj) ->
+  new Handlebars.SafeString("<pre>#{JSON.stringify(obj)}</pre>")

@@ -2,10 +2,11 @@
   "packages": {
     "iron-router": {},
     "bootstrap3-less": {},
-    "accounts-ui-bootstrap-3": {},
     "spin": {},
     "flash-messages": {},
     "i18n": {},
-    "font-awesome-4": {}
+    "font-awesome-4": {},
+    "cookie": {},
+    "sjcl": {}
   }
 }

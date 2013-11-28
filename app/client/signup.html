@@ -1,0 +1,42 @@
+<template name="signup">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{__ "signup.title"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="form-signup" class="form-horizontal" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="input-signup-email">{{__ "common.labels.email"}}</label>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="input-signup-email" placeholder="{{__ 'signup.form.email.placeholder'}}" required="required" data-parsley-notblank="true" data-parsley-unique="email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="input-signup-password">{{__ "common.labels.password"}}</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="input-signup-password" placeholder="{{__ 'signup.form.password.placeholder'}}" required="required" data-parsley-notblank="true" data-parsley-equalto="#input-signup-password" data-parsley-minlength="{{minPasswordLength}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="input-signup-password-confirm">{{__ "signup.form.passwordConfirm.label"}}</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="input-signup-password-confirm" placeholder="{{__ 'signup.form.passwordConfirm.placeholder'}}" required="true" data-parsley-equalto="#input-signup-password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="input-signup-username">{{__ "signup.form.username.label"}}</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input-signup-username" placeholder="{{__ 'signup.form.username.placeholder'}}" required="true" data-parsley-notblank="true" data-parsley-unique="username" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" id="button-signup">{{__ "signup.form.submit"}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
