@@ -33,7 +33,7 @@ _.extend Meteor.i18nMessages,
       logout: "Logout"
   signup:
     title:
-      en: "Signup"
+      en: "Registration"
       it: "Registrazione"
     validation:
       unique:
@@ -63,8 +63,11 @@ _.extend Meteor.i18nMessages,
           en: "How other users will refer to you"
           it: "Come sarai conosciuto agli altri utenti"
       submit:
-        en: "Send"
-        it: "Invia"
+        en: "Sign Up"
+        it: "Registrami"
+      login:
+        en: "Sign In"
+        it: "Login"
     flash:
       success:
         en: "Welcome to {{appName}}, {{username}}!"
