@@ -44,17 +44,27 @@ Template.signup.events
     $("#form-signup").parsley("validate").done (valid) ->
       unless valid then return
 
-      # create the user
       password = $('#input-signup-password').val()
+
+      keys = UberSafe.generateUserKeys()
+
 
       user =
         username: $("#input-signup-username").val()
         email: $("#input-signup-email").val()
         password: password
+        profile:
+          publicKey: keys.public
+          privateKeyEncrypted: UberSafe.encryptSymmetric password, keys.private
 
+      # create the user
       Accounts.createUser user, (error) ->
         if error
           console.error error
+          # add an error flash
+
+          # add a success flash
+          FlashMessages.sendError __ "signup.flash.error"
         else
           # add a success flash
           FlashMessages.sendSuccess __ "signup.flash.success",

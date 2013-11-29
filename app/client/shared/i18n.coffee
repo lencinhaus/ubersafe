@@ -72,3 +72,6 @@ _.extend Meteor.i18nMessages,
       success:
         en: "Welcome to {{appName}}, {{username}}!"
         it: "Benvenuto in {{appName}}, {{username}}!"
+      error:
+        en: "Ouch! An error occurred, but someone will surely fix it soon. No really, please have faith and try again later."
+        it: "Ahia! C'è stato un errore, ma senz'altro qualcuno lo correggerà presto. No veramente, abbi fede e riprova più tardi."

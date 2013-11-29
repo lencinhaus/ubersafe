@@ -8,8 +8,7 @@
       "flash-messages": {},
       "i18n": {},
       "font-awesome-4": {},
-      "cookie": {},
-      "sjcl": {}
+      "cookie": {}
     },
     "packages": {
       "iron-router": {
@@ -46,11 +45,6 @@
         "git": "https://github.com/chuangbo/meteor-cookie.git",
         "tag": "v1.0.2.3",
         "commit": "f39620ef5650642c38f51b512d82a9b34924b609"
-      },
-      "sjcl": {
-        "git": "https://github.com/peerlibrary/meteor-sjcl.git",
-        "tag": "v1.0.0.3",
-        "commit": "777557f659fca8d24602ef03ed27ee3ff154fa90"
       }
     }
   }

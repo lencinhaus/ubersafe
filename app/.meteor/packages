@@ -19,5 +19,6 @@ flash-messages
 i18n
 font-awesome-4
 cookie
-sjcl
 parsleyjs-promises
+sjcl
+ubersafe-core

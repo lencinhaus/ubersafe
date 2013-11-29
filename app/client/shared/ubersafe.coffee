@@ -1,5 +1,6 @@
 # constants
 COOKIE_LAST_USERNAME = 'ubersafe-last-username'
+ECC_CURVE = sjcl.ecc.curves["c256"]
 
 @UberSafe =
   getLastUsername: ->
@@ -12,5 +13,12 @@ COOKIE_LAST_USERNAME = 'ubersafe-last-username'
     else
       Cookie.remove COOKIE_LAST_USERNAME
 
-  dummy: ->
-    console.log "dummy"
+  generateUserKeys: ->
+    keys = sjcl.ecc.elGamal.generateKeys ECC_CURVE
+    userKeys =
+      public: JSON.stringify keys.pub._point.toBits()
+      private: JSON.stringify keys.sec._exponent.toBits()
+    userKeys
+
+  encryptSymmetric: (password, plaintext) ->
+    sjcl.encrypt password, plaintext
