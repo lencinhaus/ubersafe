@@ -72,9 +72,7 @@ _.extend Meteor.i18nMessages,
       submit:
         en: "Sign Up"
         it: "Registrami"
-      login:
-        en: "Sign In"
-        it: "Login"
+      login: "Login"
     flash:
       success:
         en: "Welcome to {{appName}}, {{username}}!"

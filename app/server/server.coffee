@@ -1,2 +1,2 @@
 Meteor.startup ->
-  Meteor.users.remove {}
+#  Meteor.users.remove {}

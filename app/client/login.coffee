@@ -1,5 +1,5 @@
 Template.login.lastUsername = ->
-  UberSafe.getLastUsername()
+  UberSafe.getLastUsername() or ""
 
 Template.login.created = ->
   @firstRender = true
@@ -30,13 +30,22 @@ Template.login.events
       username = $("#input-login-username").val()
       password = $("#input-login-password").val()
 
+      # set password
+      UberSafe.setPassword password
+
       Meteor.loginWithPassword
         username: username
       , password, (error) ->
           if error
+            # forget the password
+            UberSafe.clearPassword()
+
             # show error flash
             FlashMessages.sendError __ "login.flash.error"
           else
+            # update last username
+            UberSafe.setLastUsername username
+
             # show success flash
             FlashMessages.sendSuccess __ "login.flash.success",
               username: username

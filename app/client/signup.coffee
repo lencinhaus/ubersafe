@@ -46,19 +46,22 @@ Template.signup.events
 
       password = $("#input-signup-password").val()
 
-      keys = UberSafe.generateUserKeys()
+      # set the password
+      UberSafe.setPassword password
 
       user =
         username: $("#input-signup-username").val()
         email: $("#input-signup-email").val()
         password: password
         profile:
-          publicKey: keys.public
-          privateKeyEncrypted: UberSafe.encryptSymmetric password, keys.private
+          keys: UberSafe.generateKeys()
 
       # create the user
       Accounts.createUser user, (error) ->
         if error
+          # clear the password
+          UberSafe.clearPassword()
+
           console.error error
 
           # add an error flash
