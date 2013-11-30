@@ -1,7 +1,7 @@
 # set default settings
 Meteor.settings = _.deepExtend
   public:
-    name: "UberSafe"
+    name: "ÜberSafe"
     password:
       minLength: 6
 , Meteor.settings or {}

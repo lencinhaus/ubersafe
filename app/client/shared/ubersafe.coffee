@@ -2,17 +2,14 @@
 LOCAL_STORAGE_LAST_USERNAME_KEY = 'UberSafe.lastUsername'
 ECC_CURVE = sjcl.ecc.curves["c256"]
 
-# window.autoLoginEnabled = false
-
 # initialization
-initialized = false
 Meteor.startup ->
   # start the entropy collectors
   sjcl.random.startCollectors()
 
   # ensure the user is logged out
   Meteor.logout ->
-    initialized = true
+    setupKeyManagement()
 
 # utility functions to ensure state consistency
 ensurePassword = ->
@@ -23,6 +20,27 @@ ensureKeys = ->
   unless UberSafe._keys then throw "keys not set"
   return
 
+setupKeyManagement = ->
+  Deps.autorun ->
+    # subscribe to ubersafe user properties
+    Meteor.subscribe "userUberSafeData"
+
+  Deps.autorun ->
+    user = Meteor.user()
+    if user
+      # grab keys when a user signs in
+      publicPointBits = JSON.parse user.ubersafe.keys.public
+      secretExponentBits = JSON.parse UberSafe.decryptSymmetric user.ubersafe.keys.secretEncrypted
+      UberSafe._keys =
+        pub: new sjcl.ecc.elGamal.publicKey ECC_CURVE, publicPointBits
+        sec: new sjcl.ecc.elGamal.secretKey ECC_CURVE, sjcl.bn.fromBits secretExponentBits
+    else
+      # forget keys and password when she signs out
+      UberSafe._password = UberSafe._keys = null
+
+    return
+
+# API
 @UberSafe =
   _password: null
   _keys: null
@@ -66,18 +84,3 @@ ensureKeys = ->
   decryptAsymmetric: (ciphertext) ->
     ensureKeys()
     sjcl.decrypt @_keys.sec, ciphertext
-
-Deps.autorun ->
-  user = Meteor.user()
-  if initialized and user
-    # grab keys when a user signs in
-    publicPointBits = JSON.parse user.profile.keys.public
-    secretExponentBits = JSON.parse UberSafe.decryptSymmetric user.profile.keys.secretEncrypted
-    UberSafe._keys =
-      pub: new sjcl.ecc.elGamal.publicKey ECC_CURVE, publicPointBits
-      sec: new sjcl.ecc.elGamal.secretKey ECC_CURVE, sjcl.bn.fromBits secretExponentBits
-  else
-    # forget keys and password when she signs out
-    UberSafe._password = UberSafe._keys = null
-
-  return

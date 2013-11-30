@@ -14,8 +14,10 @@ Template.login.rendered = ->
 
     $("#form-login").parsley parsleyOptions
 
-    # focus on the login
-    $("#input-login-username").focus()
+    if UberSafe.getLastUsername()
+      $("#input-login-password").focus()
+    else
+      $("#input-login-username").focus()
 
 Template.login.events
   "keyup #form-login input": (evt) ->

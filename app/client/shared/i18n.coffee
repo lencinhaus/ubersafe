@@ -34,6 +34,9 @@ _.extend Meteor.i18nMessages,
   client:
     nav:
       logout: "Logout"
+      create:
+        en: "Create"
+        it: "Crea"
     flash:
       logoutSuccess:
         en: "Farewell {{username}}, I'll keep your data safe while you're away."
@@ -104,3 +107,7 @@ _.extend Meteor.i18nMessages,
       error:
         en: "Hmm, these credentials seem to be fake, sorry."
         it: "Hmm, queste credenziali sembrano essere finte, mi spiace."
+  create:
+    title:
+      en: "New Document"
+      it: "Nuovo Documento"

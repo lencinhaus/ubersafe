@@ -1,0 +1,1 @@
+class @CreateController extends RouteController

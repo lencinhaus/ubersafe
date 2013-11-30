@@ -19,9 +19,11 @@
             </div>
 
             <div class="navbar-collapse collapse">
-
+                {{#if currentUser}}
                 <ul class="nav navbar-nav">
+                    <li{{#if currentRouteStartsWith 'create'}} class="active"{{/if}}><a href="{{pathFor 'create'}}">{{__ 'client.nav.create'}}</a></li>
                 </ul>
+                {{/if}}
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
