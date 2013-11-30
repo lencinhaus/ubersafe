@@ -31,8 +31,8 @@ Template.signup.rendered = ->
 
     $("#form-signup").parsley parsleyOptions
 
-    # focus on the email
-    $("#input-signup-email").focus()
+    # focus on the username
+    $("#input-signup-username").focus()
 
 Template.signup.events
   "keyup #form-signup input": (evt) ->
@@ -44,10 +44,9 @@ Template.signup.events
     $("#form-signup").parsley("validate").done (valid) ->
       unless valid then return
 
-      password = $('#input-signup-password').val()
+      password = $("#input-signup-password").val()
 
       keys = UberSafe.generateUserKeys()
-
 
       user =
         username: $("#input-signup-username").val()
@@ -61,11 +60,13 @@ Template.signup.events
       Accounts.createUser user, (error) ->
         if error
           console.error error
-          # add an error flash
 
-          # add a success flash
+          # add an error flash
           FlashMessages.sendError __ "signup.flash.error"
         else
+          # save the last username
+          UberSafe.setLastUsername user.username
+
           # add a success flash
           FlashMessages.sendSuccess __ "signup.flash.success",
             username: user.username

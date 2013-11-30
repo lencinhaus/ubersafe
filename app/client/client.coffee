@@ -14,4 +14,12 @@ Template.layout.events
     Meteor.setLocale locale
 
   "click #link-logout": ->
-    Meteor.logout()
+    username = Meteor.user().username
+    Meteor.logout (error) ->
+      if error
+        # show error flash
+        FlashMessages.sendError __ "client.flash.logoutError"
+      else
+        # show success flash
+        FlashMessages.sendSuccess __ "client.flash.logoutSuccess",
+          username: username

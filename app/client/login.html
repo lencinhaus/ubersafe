@@ -1,3 +1,31 @@
 <template name="login">
-    LOGIN
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{__ "login.title"}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="form-login" class="form-horizontal" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="input-login-username">{{__ "common.labels.username"}}</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input-login-username" placeholder="{{__ 'login.form.username.placeholder'}}" required="required" data-parsley-notblank="true" value="{{lastUsername}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4" for="input-login-password">{{__ "common.labels.password"}}</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="input-login-password" placeholder="{{__ 'login.form.password.placeholder'}}" required="required" data-parsley-notblank="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" id="button-login">{{__ "login.form.submit"}}</button>
+                    <a href="{{pathFor 'signup'}}" role="button" class="btn btn-default">{{__ "login.form.signup"}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

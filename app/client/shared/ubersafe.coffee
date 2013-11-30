@@ -15,10 +15,8 @@ ECC_CURVE = sjcl.ecc.curves["c256"]
 
   generateUserKeys: ->
     keys = sjcl.ecc.elGamal.generateKeys ECC_CURVE
-    userKeys =
-      public: JSON.stringify keys.pub._point.toBits()
-      private: JSON.stringify keys.sec._exponent.toBits()
-    userKeys
+    public: JSON.stringify keys.pub._point.toBits()
+    private: JSON.stringify keys.sec._exponent.toBits()
 
   encryptSymmetric: (password, plaintext) ->
     sjcl.encrypt password, plaintext
