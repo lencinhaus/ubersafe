@@ -1,0 +1,34 @@
+#table-documents {
+  .sort:hover {
+    text-decoration: none;
+  }
+
+  .sort .icon-sort,
+  .sort.current-sort-asc:hover .icon-sort-asc,
+  .sort.current-sort-desc:hover .icon-sort-desc {
+    display: none;
+  }
+
+  .sort.sort-asc:hover .icon-sort-asc,
+  .sort.sort-desc:hover .icon-sort-desc,
+  .sort.current-sort-asc .icon-sort-asc,
+  .sort.current-sort-desc .icon-sort-desc {
+    display: inline-block;
+  }
+
+  .column-title {
+    width: 60%;
+  }
+
+  .column-createdAt {
+    width: 15%;
+  }
+
+  .column-modifiedAt {
+    width: 15%;
+  }
+
+  tbody tr {
+    cursor: pointer;
+  }
+}

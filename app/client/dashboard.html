@@ -1,6 +1,51 @@
 <template name="dashboard">
-    <h1>DASHBOARD</h1>
-    {{#each documents}}
-    {{dump this}}
-    {{/each}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>{{__ 'dashboard.title'}} <small>{{__ 'dashboard.subtitle'}}</small></h1>
+            </div>
+            {{#if haveDocuments}}
+            <div class="navbar navbar-default">
+                <div class="navbar-form navbar-left" id="form-search-documents" role="search">
+                    <div class="form-group">
+                        <input type="text" id="input-search-documents" class="form-control" placeholder="{{__ 'dashboard.searchForm.search.placeholder'}}">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <table class="table table-hover" id="table-documents">
+                    <thead>
+                        <tr>
+                            {{#each documentsColumns}}
+                            <th class="column-{{this}}">
+                                <a href="#" class="sort {{documentsColumnSortClasses}}" data-field="{{this}}">
+                                    {{documentsColumnName this}}
+                                    <i class="fa fa-sort-asc icon-sort icon-sort-asc"></i>
+                                    <i class="fa fa-sort-desc icon-sort icon-sort-desc"></i>
+                                </a>
+                            </th>
+                            {{/each}}
+                            <th>{{__ 'dashboard.documents.columns.actions'}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each documents}}
+                        <tr data-document-id="{{_id}}">
+                            <td>{{title}}</td>
+                            <td>{{formatDateFromNow createdAt}}</td>
+                            <td>{{formatDateFromNow modifiedAt}}</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            {{else}}
+            <div class="jumbotron">
+                <p>{{__ 'dashboard.empty.text'}}</p>
+                <a role="button" class="btn btn-primary" href="{{pathFor 'create'}}">{{__ 'dashboard.empty.create'}}</a>
+            </div>
+            {{/if}}
+        </div>
+    </div>
 </template>

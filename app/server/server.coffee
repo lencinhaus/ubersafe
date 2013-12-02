@@ -13,7 +13,7 @@ _.extend Match,
 
   CollectionSort: (sortableFields) ->
     matchObject = {}
-    _.each sortableFields, (index, field) ->
+    _.each sortableFields, (field) ->
       matchObject[field] = Match.Optional Match.CollectionSortDirection
 
     matchObject

@@ -8,7 +8,8 @@
       "flash-messages": {},
       "i18n": {},
       "font-awesome-4": {},
-      "cookie": {}
+      "cookie": {},
+      "moment": {}
     },
     "packages": {
       "iron-router": {
@@ -18,8 +19,8 @@
       },
       "bootstrap3-less": {
         "git": "https://github.com/eprochasson/bootstrap3-less",
-        "tag": "v0.1.4",
-        "commit": "23ec918f8377b15b22cba33e13b717214235c88a"
+        "tag": "v0.1.5",
+        "commit": "5074432c020ffc7a676a812e92104ce0fa96080f"
       },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
@@ -45,6 +46,11 @@
         "git": "https://github.com/chuangbo/meteor-cookie.git",
         "tag": "v1.0.2.3",
         "commit": "f39620ef5650642c38f51b512d82a9b34924b609"
+      },
+      "moment": {
+        "git": "https://github.com/acreeger/meteor-moment.git",
+        "tag": "v2.2.1",
+        "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
       }
     }
   }

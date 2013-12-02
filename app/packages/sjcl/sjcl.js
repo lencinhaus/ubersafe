@@ -2555,11 +2555,15 @@ sjcl.prng.prototype = {
   },
   _accelerometerCollector: function (ev) {
     var ac = ev.accelerationIncludingGravity.x||ev.accelerationIncludingGravity.y||ev.accelerationIncludingGravity.z;
-    var or = "";
     if(window.orientation){
-      or = window.orientation;
+      var or = window.orientation;
+      if (typeof or === "number") {
+        sjcl.random.addEntropy(or, 1, "accelerometer");
+      }
     }
-    sjcl.random.addEntropy([ac,or], 3, "accelerometer");
+    if (ac) {
+      sjcl.random.addEntropy(ac, 2, "accelerometer");
+    }
     this._addCurrentTimeToEntropy(0);
   },
 
@@ -2592,9 +2596,7 @@ sjcl.random = new sjcl.prng(6);
   try {
     var buf, crypt, getRandomValues, ab;
     // get cryptographically strong entropy depending on runtime environment
-    if (typeof module !== 'undefined' && module.exports) {
-      // get entropy for node.js
-      crypt = require('crypto');
+    if (typeof module !== 'undefined' && module.exports && (crypt = require('crypto')) && crypt.randomBytes) {
       buf = crypt.randomBytes(1024/8);
       sjcl.random.addEntropy(buf, 1024, "crypto.randomBytes");
 

@@ -1,6 +1,11 @@
 Meteor.supportedLocales = ["en", "it"]
 
 Meteor.startup ->
+  # setup autoruns when locale changes
+  Deps.autorun ->
+    # set moment locale
+    moment.lang Meteor.getLocale()
+
   # set the locale from user language if it's not set already
   if not Meteor.getLocale() and navigator.language
     [language] = navigator.language.split "_"
@@ -137,3 +142,34 @@ _.extend Meteor.i18nMessages,
       error:
         en: "Ouch, can't save this document right now. Please try again later"
         it: "Ahai, non riesco a salvare questo documento ora. Per favore riprova più tardi"
+  dashboard:
+    title: "Dashboard"
+    subtitle:
+      en: "manage your documents"
+      it: "gestisci i tuoi documenti"
+    empty:
+      text:
+        en: "No documents so far :("
+        it: "Non hai ancora nessun documento :("
+      create:
+        en: "Create one now!"
+        it: "Creane uno ora!"
+    searchForm:
+      search:
+        placeholder:
+          en: "search"
+          it: "cerca"
+    documents:
+      columns:
+        title:
+          en: "Title"
+          it: "Titolo"
+        createdAt:
+          en: "Created"
+          it: "Creato"
+        modifiedAt:
+          en: "Modified"
+          it: "Modificato"
+        actions:
+          en: "Actions"
+          it: "Azioni"

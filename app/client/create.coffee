@@ -44,5 +44,7 @@ Template.create.events
           console.error error
           FlashMessages.sendError __ "create.flash.error"
         else
-          FlashMessages.sendSuccess __ "create.flash.success"
+          FlashMessages.sendSuccess __ "create.flash.success",
+            title: title
+
           Router.go "dashboard"

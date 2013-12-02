@@ -27,6 +27,13 @@ Handlebars.registerHelper "isCurrentLocale", (locale) ->
 Handlebars.registerHelper "localeName", (locale) ->
   __ "locales.locale_#{locale}"
 
+# dates with momentjs
+Handlebars.registerHelper "formatDate", (date) ->
+  moment(date).format "lll"
+
+Handlebars.registerHelper "formatDateFromNow", (date) ->
+  moment(date).fromNow()
+
 # debug
 Handlebars.registerHelper "dump", (obj) ->
   new Handlebars.SafeString("<pre>#{JSON.stringify(obj)}</pre>")

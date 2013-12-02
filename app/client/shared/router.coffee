@@ -9,13 +9,19 @@ checkAuthenticatedHook = ->
   # if the user is not logged in redirect to login (if he already logged in in the past) or signup (otherwise)
   if not Meteor.loggingIn() and not Meteor.user()
     # mark the current route so we can redirect to it once logged in
-    Session.set "loginRedirect",
+    loginRedirect =
       route: @route.name
-      params: @params
+      params: {}
+
+    for key in Object.keys @params
+      loginRedirect.params[key] = @params[key]
+
+    Session.set "loginRedirect", loginRedirect
 
     redirectRoute = if UberSafe.getLastUsername() then "login" else "signup"
     @redirect redirectRoute, null,
         replaceState: true
+
     return
 
 checkGuestHook = ->
@@ -31,6 +37,8 @@ checkGuestHook = ->
     @redirect redirect.route, redirect.params,
       replaceState: true
 
+    return
+
 # routes
 Router.map ->
   @route "dashboard",
@@ -41,6 +49,11 @@ Router.map ->
   @route "create",
     before: checkAuthenticatedHook
     controller: "CreateController"
+
+  @route "view",
+    path: "view/:documentId"
+    before: checkAuthenticatedHook
+    controller: "ViewController"
 
   @route "login",
     before: checkGuestHook
