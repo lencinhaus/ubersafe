@@ -17,6 +17,16 @@ _.extend Meteor.i18nMessages,
       username:
         en: "Username"
         it: "Nome Utente"
+      title:
+        en: "Title"
+        it: "Titolo"
+      content:
+        en: "Content"
+        it: "Contenuto"
+    buttons:
+      save:
+        en: "Save"
+        it: "Salva"
     validation:
       required:
         en: "This value is required"
@@ -111,3 +121,19 @@ _.extend Meteor.i18nMessages,
     title:
       en: "New Document"
       it: "Nuovo Documento"
+    form:
+      title:
+        placeholder:
+          en: "Something super-secret"
+          it: "Qualcosa di super-segreto"
+      content:
+        placeholder:
+          en: "Secret stuff!"
+          it: "Roba segreta!"
+    flash:
+      success:
+        en: "\"{{title}}\" saved and encrypted!"
+        it: "\"{{title}}\" è stato salvato e crittato!"
+      error:
+        en: "Ouch, can't save this document right now. Please try again later"
+        it: "Ahai, non riesco a salvare questo documento ora. Per favore riprova più tardi"

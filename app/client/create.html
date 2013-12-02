@@ -2,4 +2,25 @@
     <div class="page-header">
         <h1>{{__ 'create.title'}}</h1>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="form-create" class="form" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
+                        <div class="form-group">
+                            <label class="control-label" for="input-create-title">{{__ "common.labels.title"}}</label>
+                            <input type="text" class="form-control" id="input-create-title" placeholder="{{__ 'create.form.title.placeholder'}}" required="required" data-parsley-notblank="true" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="input-create-content">{{__ "common.labels.content"}}</label>
+                            <textarea rows="20" class="form-control" id="input-create-content" placeholder="{{__ 'create.form.content.placeholder'}}" required="required" data-parsley-notblank="true"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" id="button-create">{{__ 'common.buttons.save'}}"</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

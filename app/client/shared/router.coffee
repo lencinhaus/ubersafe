@@ -36,6 +36,7 @@ Router.map ->
   @route "dashboard",
     path: "/"
     before: checkAuthenticatedHook
+    controller: "DashboardController"
 
   @route "create",
     before: checkAuthenticatedHook
