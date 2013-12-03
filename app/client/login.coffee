@@ -52,3 +52,6 @@ Template.login.events
             FlashMessages.sendSuccess __ "login.flash.success",
               username: username
               appName: Meteor.settings.public.name
+
+            # restore previous route
+            Router.current().restore()

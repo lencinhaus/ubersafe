@@ -4,4 +4,5 @@ Meteor.settings = _.deepExtend
     name: "ÜberSafe"
     password:
       minLength: 6
+    paranoia: 10 # a number between 1 and 10, 1 being the least secure, 10 the most secure
 , Meteor.settings or {}

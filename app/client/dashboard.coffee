@@ -24,7 +24,7 @@ class @DashboardController extends RouteController
       @stop()
 
 Template.dashboard.haveDocuments = ->
-  @documents and @documents.count()
+  @documents and @documents.count() > 0
 
 Template.dashboard.documentsColumns = ["title", "createdAt", "modifiedAt"]
 

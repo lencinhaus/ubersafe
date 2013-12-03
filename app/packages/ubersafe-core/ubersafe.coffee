@@ -2,11 +2,15 @@
 LOCAL_STORAGE_LAST_USERNAME_KEY = 'UberSafe.lastUsername'
 ECC_CURVE = sjcl.ecc.curves["c256"]
 
+# set default paranoia
+sjcl.random.setDefaultParanoia(Meteor.settings.public.paranoia)
+
+# start the entropy collectors
+sjcl.random.startCollectors()
+
+
 # initialization
 Meteor.startup ->
-  # start the entropy collectors
-  sjcl.random.startCollectors()
-
   # ensure the user is logged out
   Meteor.logout ->
     setupKeyManagement()
@@ -41,7 +45,7 @@ setupKeyManagement = ->
     return
 
 # API
-@UberSafe =
+UberSafe =
   _password: null
   _keys: null
 

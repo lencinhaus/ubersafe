@@ -39,7 +39,12 @@ Template.create.events
       encryptedKey = UberSafe.encryptAsymmetric documentKey
 
       # create the document
-      Meteor.call "createDocument", title, encryptedContent, encryptedKey, (error, result) ->
+      document =
+        type: "text"
+        title: title
+        encryptedContent: encryptedContent
+
+      Meteor.call "createDocument", document, encryptedKey, (error, result) ->
         if error
           console.error error
           FlashMessages.sendError __ "create.flash.error"

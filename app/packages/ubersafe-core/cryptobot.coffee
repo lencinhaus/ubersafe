@@ -1,3 +1,5 @@
+# CryptoBot client API
+
 # create the worker
 worker = new Worker "cryptobot/cryptobot.js"
 
@@ -36,6 +38,28 @@ executeCommand = (cmd, args) ->
   deferred.promise()
 
 # entropy
+addEntropy = (args) ->
+  # send entropy to worker
+  worker.postMessage
+    command: "addEntropy"
+    args: args
+
+# add some entropy from window.crypt if available
+addEntropyFromWindowCrypto = ->
+  if not Uint32Array then return
+
+  ab = new Uint32Array 32
+  if window.crypto and window.crypto.getRandomValues
+    window.crypto.getRandomValues ab
+  else if window.msCrypto and window.msCrypto.getRandomValues
+    window.msCrypto.getRandomValues ab
+  else
+    return
+
+  addEntropy [ab, 1024, "crypto.getRandomValues"]
+
+addEntropyFromWindowCrypto()
+
 # hack into local sjcl's entropy collection and propagate it to the web worker
 localAddEntropy = sjcl.random.addEntropy
 sjcl.random.addEntropy = ->
@@ -46,13 +70,10 @@ sjcl.random.addEntropy = ->
   len = arguments.length
   clonedArguments = (arguments[index] for index in [0...len])
 
-  # send entropy to worker
-  worker.postMessage
-    command: "addEntropy"
-    args: clonedArguments
+  addEntropy clonedArguments
 
 # API
-@CryptoBot =
+CryptoBot =
   encryptString: (str) ->
     executeCommand "encryptString",
       string: str

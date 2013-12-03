@@ -8,6 +8,10 @@ _.extend Match,
     check num, Match.Integer
     return num >= 1
 
+  InArray: (array) ->
+    Match.Where (val) ->
+      _.indexOf array, val isnt -1
+
   CollectionSortDirection: Match.Where (dir) ->
     1 is dir or -1 is dir
 

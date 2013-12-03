@@ -122,6 +122,26 @@ _.extend Meteor.i18nMessages,
       error:
         en: "Hmm, these credentials seem to be fake, sorry."
         it: "Hmm, queste credenziali sembrano essere finte, mi spiace."
+  entropy:
+    title:
+      en: "Entropy"
+      it: "Entropia"
+    subtitle:
+      en: "gimme some randomness"
+      it: "dammi un po' di caso"
+    heading:
+      en: "Computers are so predictable."
+      it: "I computer sono così prevedibili."
+    text:
+      en: "Please move around your mouse or device a little, so that we can collect some genuine human randomness."
+      it: "Per favore, muovi un po' il mouse o il dispositivo di qua e di là, così che possa raccogliere un po' di sana casualità umana."
+    complete:
+      en: "Complete"
+      it: "Completo"
+    flash:
+      success:
+        en: "Thanks a lot, I feel so casual now!"
+        it: "Grazie mille, ora mi sento molto più casual!"
   create:
     title:
       en: "New Document"
