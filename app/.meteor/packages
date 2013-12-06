@@ -24,3 +24,6 @@ sjcl
 ubersafe-core
 localstorage
 moment
+nprogress
+ejson
+marked

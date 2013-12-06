@@ -8,8 +8,6 @@ Meteor.publish "dashboardDocuments", (options) ->
     limit: Match.PositiveInteger
     sort: Match.Optional(Match.CollectionSort ["title", "createdAt", "modifiedAt"])
 
-  self = this
-
   options.skip = (options.page - 1) * options.limit
   delete options.page
 
@@ -18,14 +16,8 @@ Meteor.publish "dashboardDocuments", (options) ->
     createdAt: 1
     modifiedAt: 1
 
-  options.transform = (document) ->
-    document.encryptedKey = document.keys[self.userId].encryptedKey
-    delete document.keys
-
-    document
-
   selector = {}
-  selector["keys.#{@userId}"] =
+  selector["users.#{@userId}"] =
       $exists: true
 
   Documents.find selector, options

@@ -7,8 +7,9 @@
             {{#if haveDocuments}}
             <div class="navbar navbar-default">
                 <div class="navbar-form navbar-left" id="form-search-documents" role="search">
-                    <div class="form-group">
-                        <input type="text" id="input-search-documents" class="form-control" placeholder="{{__ 'dashboard.searchForm.search.placeholder'}}">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" id="input-search-documents" class="form-control" placeholder="{{__ 'dashboard.search.placeholder'}}">
                     </div>
                 </div>
             </div>
@@ -43,7 +44,7 @@
             {{else}}
             <div class="jumbotron">
                 <p>{{__ 'dashboard.empty.text'}}</p>
-                <a role="button" class="btn btn-primary" href="{{pathFor 'create'}}">{{__ 'dashboard.empty.create'}}</a>
+                <a role="button" class="btn btn-primary btn-lg" href="{{pathFor 'create'}}">{{__ 'dashboard.empty.create'}}</a>
             </div>
             {{/if}}
         </div>

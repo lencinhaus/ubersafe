@@ -88,3 +88,13 @@ UberSafe =
   decryptAsymmetric: (ciphertext) ->
     ensureKeys()
     sjcl.decrypt @_keys.sec, ciphertext
+
+  generateDocumentKey: ->
+    key: sjcl.random.randomWords 8
+    iv: sjcl.random.randomWords 4
+
+  encryptDocumentKey: (key) ->
+    @encryptAsymmetric EJSON.stringify key
+
+  decryptDocumentKey: (encryptedKey) ->
+    EJSON.parse @decryptAsymmetric encryptedKey

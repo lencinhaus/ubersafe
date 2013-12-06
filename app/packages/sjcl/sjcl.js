@@ -13,7 +13,7 @@
 /*global document, window, escape, unescape, module, require, Uint32Array */
 
 /** @namespace The Stanford Javascript Crypto Library, top-level namespace. */
-sjcl = {
+var sjcl = {
   /** @namespace Symmetric ciphers. */
   cipher: {},
 

@@ -20,11 +20,13 @@ class @DashboardController extends RouteController
     if @ready()
       documents: Documents.find {},
         sort: Session.get "dashboardDocumentsSort"
+      .fetch()
     else
       @stop()
+      return
 
 Template.dashboard.haveDocuments = ->
-  @documents and @documents.count() > 0
+  @documents and @documents.length > 0
 
 Template.dashboard.documentsColumns = ["title", "createdAt", "modifiedAt"]
 

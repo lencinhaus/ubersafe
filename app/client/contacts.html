@@ -1,0 +1,53 @@
+<template name="contacts">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>{{__ 'contacts.title'}} <small>{{__ 'contacts.subtitle'}}</small></h1>
+            </div>
+            {{#if haveContacts}}
+            <div class="navbar navbar-default">
+                <div class="navbar-form navbar-left" id="form-search-contacts" role="search">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" id="input-search-contacts" class="form-control" placeholder="{{__ 'contacts.search.placeholder'}}">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <table class="table table-hover" id="table-documents">
+
+                </table>
+            </div>
+            {{else}}
+            <div class="jumbotron">
+                <p>{{__ 'contacts.empty.text'}}</p>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-add-contact">{{__ 'contacts.empty.create'}}</button>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    <div id="modal-add-contact" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{__ 'contacts.create.title'}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="form-add-contact" class="form-horizontal" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="input-add-contact-user">{{__ 'contacts.create.form.user.label'}}</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="input-add-contact-user" placeholder="{{__ 'contacts.create.form.user.placeholder'}}" required="required" data-parsley-notblank="true" data-parsley-existing="true" data-parsley-notcurrent="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{__ 'common.buttons.close'}}</button>
+                    <button id="button-add-contact" type="button" class="btn btn-primary">{{__ 'contacts.create.form.add'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

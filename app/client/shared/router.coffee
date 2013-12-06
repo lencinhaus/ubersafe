@@ -77,6 +77,10 @@ Router.map ->
     before: checkAuthenticatedHook
     controller: "ViewController"
 
+  @route "contacts",
+    before: checkAuthenticatedHook
+    controller: "ContactsController"
+
   @route "login",
     before: checkGuestHook
 

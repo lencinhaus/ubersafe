@@ -1,12 +1,13 @@
 Meteor.methods
-  createDocument: (document, encryptedKey) ->
+  createDocument: (document, key) ->
     check @userId, Match.NotEmptyString
+
     check document,
       type: Match.InArray ["text"]
       title: Match.NotEmptyString
-      encryptedContent: Match.NotEmptyString
+      content: Match.NotEmptyString
 
-    check encryptedKey, Match.NotEmptyString
+    check key, Match.NotEmptyString
 
     now = new Date()
 
@@ -14,10 +15,12 @@ Meteor.methods
       createdAt: now
       modifiedAt: now
       creatorUserId: @userId
-      keys: {}
+      users: {}
 
-    document.keys[@userId] =
-      encryptedKey: encryptedKey
+    userData =
+      key: key
       canEdit: true
+
+    document.users[@userId] = userData
 
     Documents.insert document

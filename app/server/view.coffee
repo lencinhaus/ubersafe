@@ -7,7 +7,13 @@ Meteor.publish "viewDocument", (documentId) ->
 
   selector =
     _id: documentId
-  selector["keys.#{@userId}"] =
+  selector["users.#{@userId}"] =
     $exists: true
 
-  Documents.find selector
+  fields =
+    title: 1
+    content: 1
+  fields["users.#{@userId}"] = 1
+
+  Documents.find selector,
+    fields: fields

@@ -32,6 +32,9 @@ _.extend Meteor.i18nMessages,
       save:
         en: "Save"
         it: "Salva"
+      close:
+        en: "Close"
+        it: "Chiudi"
     validation:
       required:
         en: "This value is required"
@@ -46,12 +49,18 @@ _.extend Meteor.i18nMessages,
         email:
           en: "This value should be a valid email"
           it: "Questo valore deve essere un indirizzo email valido"
-  client:
+  layout:
     nav:
       logout: "Logout"
       create:
         en: "Create"
         it: "Crea"
+      contacts:
+        en: "Contacts"
+        it: "Contatti"
+      notifications:
+        en: "Notifications"
+        it: "Messaggi"
     flash:
       logoutSuccess:
         en: "Farewell {{username}}, I'll keep your data safe while you're away."
@@ -161,7 +170,7 @@ _.extend Meteor.i18nMessages,
         it: "\"{{title}}\" è stato salvato e crittato!"
       error:
         en: "Ouch, can't save this document right now. Please try again later"
-        it: "Ahai, non riesco a salvare questo documento ora. Per favore riprova più tardi"
+        it: "Ahia, non riesco a salvare questo documento ora. Per favore riprova più tardi"
   dashboard:
     title: "Dashboard"
     subtitle:
@@ -174,11 +183,10 @@ _.extend Meteor.i18nMessages,
       create:
         en: "Create one now!"
         it: "Creane uno ora!"
-    searchForm:
-      search:
-        placeholder:
-          en: "search"
-          it: "cerca"
+    search:
+      placeholder:
+        en: "search a document"
+        it: "cerca un documento"
     documents:
       columns:
         title:
@@ -193,3 +201,49 @@ _.extend Meteor.i18nMessages,
         actions:
           en: "Actions"
           it: "Azioni"
+  contacts:
+    title:
+      en: "Contacts"
+      it: "Contatti"
+    subtitle:
+      en: "your little circle of trust"
+      it: "il tuo piccolo cerchio della fiducia"
+    empty:
+      text:
+        en: "No contacts so far :("
+        it: "Non hai ancora nessun contatto :("
+      create:
+        en: "Don't be a sociopath and add someone now!"
+        it: "Non essere un sociopatico e aggiungi qualcuno ora!"
+    create:
+      title:
+        en: "Add a contact"
+        it: "Aggiungi un contatto"
+      form:
+        user:
+          label:
+            en: "User"
+            it: "Utente"
+          placeholder:
+            en: "Username or email"
+            it: "Nome utente oppure email"
+        add:
+          en: "Add"
+          it: "Aggiungi"
+      validation:
+        existing:
+          en: "No user exists with these credentials"
+          it: "Non esiste alcun utente con queste credenziali"
+        notcurrent:
+          en: "You can't add yourself, fool!"
+          it: "Non puoi aggiungere te stesso, pazzo!"
+      flash:
+        success:
+          en: "Your contact request has been sent! I'll notify you when the user accepts or declines your request."
+          it: "La tua richiesta di contatto è stata inviata! Ti avviserò quando l'utente avrà accettato o declinato la tua richiesta."
+        error:
+          en: "Ouch, I cant send your contact request right now. Please try again later"
+          it: "Ahia, non riesco ad inviare la tua richiesta di contatto in questo momento. Per favore riprova più tardi"
+        existing:
+          en: "You've already sent a contact request to this user. I'll notify you when she accepts or declines your request."
+          it: "Hai già inviato una richiesta di contatto a questo utente. Ti avviserò quando avrà accettato o declinato la richiesta."

@@ -1,3 +1,26 @@
 <template name="view">
-    {{dump this}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{> viewContent}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="viewContent">
+    {{#if contentReady}}
+        <div id="content">
+            {{#markdown}}
+                {{content}}
+            {{/markdown}}
+        </div>
+    {{else}}
+        <p>Decrypting your content...</p>
+    {{/if}}
 </template>

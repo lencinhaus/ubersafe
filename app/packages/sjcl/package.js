@@ -4,5 +4,7 @@ Package.describe({
 
 Package.on_use(function (api, where) {
     api.export('sjcl', 'client');
-    api.add_files('sjcl.js', 'client');
+    api.add_files('sjcl.js', 'client', {
+      bare: true
+    });
 });

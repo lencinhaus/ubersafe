@@ -1,7 +1,7 @@
 # CryptoBot client API
 
 # create the worker
-worker = new Worker "cryptobot/cryptobot.js"
+worker = new Worker "/cryptobot/cryptobot.js"
 
 # command execution and result handling
 deferred = null
@@ -74,6 +74,14 @@ sjcl.random.addEntropy = ->
 
 # API
 CryptoBot =
-  encryptString: (str) ->
+  encryptString: (plaintext, encryptionData) ->
     executeCommand "encryptString",
-      string: str
+      plaintext: plaintext
+      key: encryptionData.key
+      iv: encryptionData.iv
+
+  decryptString: (ciphertext, encryptionData) ->
+    executeCommand "decryptString",
+      ciphertext: ciphertext
+      key: encryptionData.key
+      iv: encryptionData.iv

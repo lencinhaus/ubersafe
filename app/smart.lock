@@ -9,7 +9,9 @@
       "i18n": {},
       "font-awesome-4": {},
       "cookie": {},
-      "moment": {}
+      "moment": {},
+      "nprogress": {},
+      "marked": {}
     },
     "packages": {
       "iron-router": {
@@ -51,6 +53,16 @@
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.2.1",
         "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
+      },
+      "nprogress": {
+        "git": "https://github.com/zhouzhuojie/meteor-nprogress.git",
+        "tag": "v0.0.3",
+        "commit": "ffd1c5dd400af64121197f4e637a215c4b6b1fc7"
+      },
+      "marked": {
+        "git": "https://github.com/chuangbo/meteor-marked.git",
+        "tag": "v0.2.9",
+        "commit": "6485d6f03841501f81176e34ab375840473aa714"
       }
     }
   }

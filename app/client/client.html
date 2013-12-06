@@ -6,59 +6,6 @@
 <body>
 </body>
 
-<template name="layout">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{pathFor 'dashboard'}}">{{appName}}</a>
-            </div>
-
-            <div class="navbar-collapse collapse">
-                {{#if currentUser}}
-                <ul class="nav navbar-nav">
-                    <li{{#if currentRouteStartsWith 'create'}} class="active"{{/if}}><a href="{{pathFor 'create'}}">{{__ 'client.nav.create'}}</a></li>
-                </ul>
-                {{/if}}
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{localeName locale}} <i class="fa fa-caret-down fa-fw"></i></a>
-                        <ul class="dropdown-menu">
-                            {{#each supportedLocales}}
-                            <li><a href="javascript:void(0)" data-locale="{{code}}" class="link-switch-locale">{{name}}{{#if isCurrentLocale code}} <i class="fa fa-check fa-fw"></i>{{/if}}</a></li>
-                            {{/each}}
-                        </ul>
-                    </li>
-                    {{#if currentUser}}
-                    <li>
-                        <a href="javascript:void(0)" id="link-logout">{{__ "client.nav.logout"}}</a>
-                    </li>
-                    {{/if}}
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div id="notifications">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    {{> flashMessages}}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        {{yield}}
-    </div>
-</template>
-
 <template name="loading">
     <div class="row">
         <div class="col-md-12 loading">

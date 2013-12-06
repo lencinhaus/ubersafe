@@ -2,6 +2,10 @@
  * CryptoBot is a Web Worker that encrypts/decrypts stuff in background
  */
 
+// constants
+CIPHER_MODE = 'gcm';
+CIPHER_TAG_SIZE = 128;
+
 // hack for preventing a "window is not defined" error from sjcl init
 window = null;
 
@@ -22,9 +26,12 @@ addEventListener('message', function(e) {
         sjcl.random.addEntropy.apply(sjcl.random, args);
         break;
       case 'encryptString':
-        var str = data.string;
-        var encrypted = encryptString(str);
-        returnResult(encrypted);
+        var ciphertext = encryptString(data.plaintext, data.key, data.iv);
+        returnResult(ciphertext);
+        break;
+      case 'decryptString':
+        var plaintext = decryptString(data.ciphertext, data.key, data.iv);
+        returnResult(plaintext);
         break;
       default:
         returnError('unrecognized command ' + data.command);
@@ -58,8 +65,18 @@ function log(message) {
   });
 }
 
-function encryptString(str) {
-  log('encrypting string');
-  if(Math.random() > .5) throw 'ERRORZS!';
-  return 'ciphertexts';
+function createCipher(key) {
+  return new sjcl.cipher.aes(key);
+}
+
+function encryptString(plaintext, key, iv) {
+  plaintext = sjcl.codec.utf8String.toBits(plaintext);
+  var ciphertext = sjcl.mode[CIPHER_MODE].encrypt(createCipher(key), plaintext, iv, [], CIPHER_TAG_SIZE);
+  return sjcl.codec.base64.fromBits(ciphertext);
+}
+
+function decryptString(ciphertext, key, iv) {
+  ciphertext = sjcl.codec.base64.toBits(ciphertext);
+  var plaintext = sjcl.mode[CIPHER_MODE].decrypt(createCipher(key), ciphertext, iv, [], CIPHER_TAG_SIZE);
+  return sjcl.codec.utf8String.fromBits(plaintext);
 }

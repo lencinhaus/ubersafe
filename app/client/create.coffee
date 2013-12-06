@@ -29,27 +29,30 @@ Template.create.events
       content = $("#input-create-content").val()
       title = $("#input-create-title").val()
 
-      # create the document random key
-      documentKey = sjcl.random.randomWords 8
+      # create the document key
+      key = UberSafe.generateDocumentKey()
 
       # encrypt the content with the created key
-      encryptedContent = sjcl.encrypt documentKey, content
+      promise = CryptoBot.encryptString content, key
+      promise.done (encryptedContent) ->
+        # encrypt the document's key
+        encryptedKey = UberSafe.encryptDocumentKey key
 
-      # encrypt the document's key with the user's public key
-      encryptedKey = UberSafe.encryptAsymmetric documentKey
+        # create the document
+        document =
+          type: "text"
+          title: title
+          content: encryptedContent
 
-      # create the document
-      document =
-        type: "text"
-        title: title
-        encryptedContent: encryptedContent
+        Meteor.call "createDocument", document, encryptedKey, (error) ->
+          if error
+            console.error error
+            FlashMessages.sendError __ "create.flash.error"
+          else
+            FlashMessages.sendSuccess __ "create.flash.success",
+              title: title
 
-      Meteor.call "createDocument", document, encryptedKey, (error, result) ->
-        if error
-          console.error error
-          FlashMessages.sendError __ "create.flash.error"
-        else
-          FlashMessages.sendSuccess __ "create.flash.success",
-            title: title
+            Router.go "dashboard"
 
-          Router.go "dashboard"
+      promise.fail (error) ->
+        console.error error
