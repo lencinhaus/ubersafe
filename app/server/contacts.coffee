@@ -54,7 +54,7 @@ Meteor.methods
       _id:
         $ne: @userId
       username:
-        $regex: new RegExp queryPattern
+        $regex: new RegExp queryPattern, "i"
     ,
       sort:
         username: 1
