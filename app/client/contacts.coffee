@@ -18,25 +18,16 @@ getSelectorByType = (type, status) ->
           fromUserId: Meteor.userId()
         ]
 
-    when "requests"
-      selector =
-        fromUserId: Meteor.userId()
+    when "requests", "pending"
+      property = if "requests" is type then "fromUserId" else "toUserId"
+      selector = {}
+      selector[property] = Meteor.userId()
 
       if status
         selector.status = status
       else
         selector.status =
           $in: ["requested", "declined"]
-
-    when "pending"
-      selector =
-        toUserId: Meteor.userId()
-
-      if status
-        selector.status = status
-      else
-      selector.status =
-        $in: ["requested", "declined"]
 
   selector
 
