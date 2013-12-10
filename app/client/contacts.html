@@ -4,18 +4,110 @@
             <div class="page-header">
                 <h1>{{__ 'contacts.title'}} <small>{{__ 'contacts.subtitle'}}</small></h1>
             </div>
-            {{#if haveContacts}}
             <div class="navbar navbar-default">
-                <div class="navbar-form navbar-left" id="form-search-contacts" role="search">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                        <input type="text" id="input-search-contacts" class="form-control" placeholder="{{__ 'contacts.search.placeholder'}}">
-                    </div>
-                </div>
+                <ul class="nav navbar-nav nav-pills">
+                    <li{{#if isType 'accepted'}} class="active"{{/if}}><a href="{{pathForContacts 'accepted'}}">Your contacts{{#if haveContacts 'accepted'}} <span class="badge">{{countNonDeclinedContacts 'accepted'}}</span>{{/if}}</a></li>
+                    {{#if haveContacts 'requests'}}
+                    <li{{#if isType 'requests'}} class="active"{{/if}}><a href="{{pathForContacts 'requests'}}">Your requests <span class="badge">{{countNonDeclinedContacts 'requests'}}</span></a></li>
+                    {{/if}}
+                    {{#if haveContacts 'pending'}}
+                    <li{{#if isType 'pending'}} class="active"{{/if}}><a href="{{pathForContacts 'pending'}}">Requests from others <span class="badge">{{countNonDeclinedContacts 'pending'}}</span></a></li>
+                    {{/if}}
+                </ul>
             </div>
+            {{#if haveContacts type}}
             <div class="panel panel-default">
-                <table class="table table-hover" id="table-documents">
-
+                <table class="table table-hover" id="table-contacts">
+                    <thead>
+                        <tr>
+                            {{#if isType 'accepted'}}
+                            <th>User</th>
+                            <th>Requested</th>
+                            <th>Accepted</th>
+                            {{/if}}
+                            {{#if isType 'requests'}}
+                            <th>User</th>
+                            <th>Status</th>
+                            <th>Requested</th>
+                            <th>Answered</th>
+                            {{/if}}
+                            {{#if isType 'pending'}}
+                            <th>From User</th>
+                            <th>Status</th>
+                            <th>Requested</th>
+                            <th>Answered</th>
+                            {{/if}}
+                            <th class="column-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if isType 'accepted'}}
+                        {{#each contacts}}
+                        <tr data-contact-id="{{_id}}">
+                            <td><strong>{{username}}</strong></td>
+                            <td>
+                                {{formatDateFromNow requestedAt}}
+                                by
+                                {{#if isRequestedByMe}}
+                                    you
+                                {{else}}
+                                    her
+                                {{/if}}
+                            </td>
+                            <td>{{formatDateFromNow answeredAt}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger button-remove">Remove</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+                        {{#if isType 'requests'}}
+                        {{#each contacts}}
+                        <tr data-contact-id="{{_id}}">
+                            <td><strong>{{username}}</strong></td>
+                            <td>{{status}}</td>
+                            <td>{{formatDateFromNow requestedAt}}</td>
+                            <td>
+                                {{#if answeredAt}}
+                                    {{formatDateFromNow answeredAt}}
+                                {{else}}
+                                pending
+                                {{/if}}
+                            </td>
+                            <td>
+                                {{#if isStatus "requested"}}
+                                <button type="button" class="btn btn-danger button-withdraw">Withdraw</button>
+                                {{/if}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+                        {{#if isType 'pending'}}
+                        {{#each contacts}}
+                        <tr data-contact-id="{{_id}}">
+                            <td><strong>{{username}}</strong></td>
+                            <td>{{status}}</td>
+                            <td>{{formatDateFromNow requestedAt}}</td>
+                            <td>
+                                {{#if answeredAt}}
+                                {{formatDateFromNow answeredAt}}
+                                {{else}}
+                                pending
+                                {{/if}}
+                            </td>
+                            <td>
+                                {{#if isStatus "requested"}}
+                                <button type="button" class="btn btn-success button-accept">Accept</button>
+                                <button type="button" class="btn btn-danger button-decline">Decline</button>
+                                {{/if}}
+                                {{#if isStatus "declined"}}
+                                <button type="button" class="btn btn-default button-forget">Forget</button>
+                                {{/if}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+                    </tbody>
                 </table>
             </div>
             {{else}}
@@ -34,12 +126,9 @@
                     <h4 class="modal-title">{{__ 'contacts.create.title'}}</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="form-add-contact" class="form-horizontal" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
+                    <div id="form-add-contact" class="form" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="input-add-contact-user">{{__ 'contacts.create.form.user.label'}}</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="input-add-contact-user" placeholder="{{__ 'contacts.create.form.user.placeholder'}}" required="required" data-parsley-notblank="true" data-parsley-existing="true" data-parsley-notcurrent="true" />
-                            </div>
+                            <input type="text" class="form-control" id="input-add-user-id" placeholder="{{__ 'contacts.create.form.username.placeholder'}}" required="required" data-parsley-notblank="true" />
                         </div>
                     </div>
                 </div>

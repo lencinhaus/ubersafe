@@ -11,7 +11,8 @@
       "cookie": {},
       "moment": {},
       "nprogress": {},
-      "marked": {}
+      "marked": {},
+      "typeahead-js": {}
     },
     "packages": {
       "iron-router": {
@@ -63,6 +64,11 @@
         "git": "https://github.com/chuangbo/meteor-marked.git",
         "tag": "v0.2.9",
         "commit": "6485d6f03841501f81176e34ab375840473aa714"
+      },
+      "typeahead-js": {
+        "git": "https://github.com/olragon/meteor-typeahead-js.git",
+        "tag": "v0.9.3",
+        "commit": "9241c6c68f39cf37699b5de7b03d60a5434a5d21"
       }
     }
   }

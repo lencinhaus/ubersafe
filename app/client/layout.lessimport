@@ -1,0 +1,8 @@
+#flash-messages {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  z-index: @zindex-modal-background + 1;
+  margin-top: 60px;
+  width: 100%;
+}

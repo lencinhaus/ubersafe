@@ -14,34 +14,32 @@ Meteor.publish "notifications", ->
     sort:
       createdAt: -1
 
-Meteor.methods
-  markSeenNotifications: (ids) ->
-    self = this
-    check @userId, Match.NotEmptyString
-    check ids, [Match.NotEmptyString]
+setNotificationsFlag = (userId, ids, flag) ->
+  check userId, Match.NotEmptyString
+  check ids, [Match.NotEmptyString]
 
-    check ids, Match.Where (ids) ->
-      # check that these are valid notification ids for the current user
-      console.log ids, self.userId, Notifications.find
-        _id:
-          $in: ids
-        toUserId:
-          $ne: self.userId
-      .fetch()
-      Notifications.find
-        _id:
-          $in: ids
-        toUserId:
-          $ne: self.userId
-      .count() is 0
-
-    # update the seen status of these notifications
-    Notifications.update
+  check ids, Match.Where (ids) ->
+    # check that these are valid notification ids for the current user
+    Notifications.find
       _id:
         $in: ids
-    ,
-      $set:
-        seen: true
-    ,
-      multi: true
+      toUserId:
+        $ne: userId
+    .count() is 0
 
+  # update the flag of these notifications
+  updates =
+    $set: {}
+  updates["$set"][flag] = true
+  Notifications.update
+    _id:
+      $in: ids
+  , updates,
+    multi: true
+
+Meteor.methods
+  markSeenNotifications: (ids) ->
+    setNotificationsFlag @userId, ids, "seen"
+
+  markClickedNotification: (notificationId) ->
+    setNotificationsFlag @userId, [notificationId], "clicked"

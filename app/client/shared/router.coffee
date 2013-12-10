@@ -78,6 +78,7 @@ Router.map ->
     controller: "ViewController"
 
   @route "contacts",
+    path: "contacts/:type?"
     before: checkAuthenticatedHook
     controller: "ContactsController"
 

@@ -12,11 +12,13 @@ Package.on_use(function (api, where) {
 
   api.add_files('underscore.mixin.deepExtend.coffee', ['client', 'server']);
   api.add_files('settings.default.coffee', ['client', 'server']);
+  api.add_files('model.coffee', ['client', 'server']);
   api.add_files('ubersafe.coffee', 'client');
   api.add_files('cryptobot.coffee', 'client');
   api.add_files('server.coffee', 'server');
 
   // exports
+  api.export(['Documents', 'Contacts', 'Notifications'], ['client', 'server']);
   api.export('UberSafe', 'client');
   api.export('CryptoBot', 'client');
 });

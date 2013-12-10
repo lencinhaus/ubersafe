@@ -1,0 +1,18 @@
+.notification {
+  // use some of the disabled dropdown link styles for clicked notifications
+  &.clicked > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @dropdown-link-disabled-color;
+    }
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: transparent;
+      background-image: none; // Remove CSS gradient
+      .reset-filter();
+    }
+  }
+}

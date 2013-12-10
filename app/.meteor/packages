@@ -27,3 +27,5 @@ moment
 nprogress
 ejson
 marked
+typeahead-js
+selectize

@@ -1,3 +1,8 @@
+Meteor.startup ->
+  #TODO: removeme
+  #Contacts.remove {}
+  #Notifications.remove {}
+
 # match patterns
 _.extend Match,
   NotEmptyString: Match.Where (str) ->

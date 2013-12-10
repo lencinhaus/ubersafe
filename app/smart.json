@@ -9,6 +9,7 @@
     "cookie": {},
     "moment": {},
     "nprogress": {},
-    "marked": {}
+    "marked": {},
+    "typeahead-js": {}
   }
 }

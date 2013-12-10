@@ -59,7 +59,7 @@ _.extend Meteor.i18nMessages,
         en: "Contacts"
         it: "Contatti"
       notifications:
-        en: "Notifications"
+        en: "Messages"
         it: "Messaggi"
     flash:
       logoutSuccess:
@@ -68,6 +68,10 @@ _.extend Meteor.i18nMessages,
       logoutError:
         en: "An error occurred, can't let you go right now. I'm overly attached, I know."
         it: "Si è verificato un errore, non riesco a lasciarti andare in questo momento. Sono troppo attaccato, lo so."
+  notifications:
+    contactRequest:
+      en: "<strong>{{fromUsername}}</strong> wants to add you to his contacts"
+      it: "<strong>{{fromUsername}}</strong> vuole aggiungerti ai suoi contatti"
   signup:
     title:
       en: "Registration"
@@ -220,23 +224,13 @@ _.extend Meteor.i18nMessages,
         en: "Add a contact"
         it: "Aggiungi un contatto"
       form:
-        user:
-          label:
-            en: "User"
-            it: "Utente"
+        username:
           placeholder:
-            en: "Username or email"
-            it: "Nome utente oppure email"
+            en: "Start typing an username and I'll suggest"
+            it: "Comincia a scrivere un nome utente e ti suggerirò"
         add:
           en: "Add"
           it: "Aggiungi"
-      validation:
-        existing:
-          en: "No user exists with these credentials"
-          it: "Non esiste alcun utente con queste credenziali"
-        notcurrent:
-          en: "You can't add yourself, fool!"
-          it: "Non puoi aggiungere te stesso, pazzo!"
       flash:
         success:
           en: "Your contact request has been sent! I'll notify you when the user accepts or declines your request."
@@ -244,6 +238,15 @@ _.extend Meteor.i18nMessages,
         error:
           en: "Ouch, I cant send your contact request right now. Please try again later"
           it: "Ahia, non riesco ad inviare la tua richiesta di contatto in questo momento. Per favore riprova più tardi"
-        existing:
+        accepted:
+          en: "You already have this user in your contacts!"
+          it: "Hai già questo utente tra i tuoi contatti!"
+        requested:
           en: "You've already sent a contact request to this user. I'll notify you when she accepts or declines your request."
           it: "Hai già inviato una richiesta di contatto a questo utente. Ti avviserò quando avrà accettato o declinato la richiesta."
+        declined:
+          en: "You've already sent a contact request to this user, and she has declined. Too bad."
+          it: "Hai già inviato una richiesta di contatto a questo utente, e lui ha declinato. Peccato."
+        pending:
+          en: "This user has already requested to add you to his contacts. You can approve her request in the <a href=\"{{pendingContactsPath}}\">pending requests list</a>."
+          it: "Questo utente ha già richiesto di aggiungerti ai suoi contatti. Puoi accettare la sua richiesta nella lista delle richieste in attesa."

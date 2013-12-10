@@ -1,0 +1,7 @@
+#table-contacts tbody td {
+  vertical-align: middle;
+}
+
+.column-actions {
+  width: 20%;
+}

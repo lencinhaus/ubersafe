@@ -1,12 +1,12 @@
 <template name="notifications">
     {{#if notifications}}
-    <li class="dropdown">
-        <a id="link-open-notifications" href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{__ 'layout.nav.notifications'}}{{#if unseen}} <span class="badge">{{unseen}}</span>{{/if}} <i class="fa fa-caret-down fa-fw"></i></a>
+    <li id="dropdown-notifications" class="{{dropdownClasses}}">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{__ 'layout.nav.notifications'}}{{#if unseen}} <span class="badge">{{unseen}}</span>{{/if}} <i class="fa fa-caret-down fa-fw"></i></a>
         <ul class="dropdown-menu">
             {{#each notifications}}
-            <li class="notification">
-                {{#if isContactRequest}}
-                User {{fromUsername}} wants to add you to his contacts
+            <li class="notification {{type}}{{#if clicked}} clicked{{/if}}{{#if seen}} seen{{/if}}">
+                {{#if typeIs 'contactRequest'}}
+                <a href="{{pathForPendingContacts}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{__ 'notifications.contactRequest' this}}</a>
                 {{/if}}
             </li>
             {{/each}}
