@@ -1,5 +1,7 @@
 Meteor.methods
   checkUserUniqueProperty: (property, value) ->
+    maybeWait()
+
     check property, Match.Where (val) ->
       _.contains ["email", "username"], val
     selector = {}

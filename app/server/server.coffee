@@ -1,7 +1,19 @@
-Meteor.startup ->
-  #TODO: removeme
-  #Contacts.remove {}
-  #Notifications.remove {}
+Future = Npm.require "fibers/future"
+
+# add synthetic latency to a function call, for remote server simulation
+@maybeWait = () ->
+  if Meteor.settings.simulatedLatency is 0 then return
+
+  future = new Future
+
+  delayed = ->
+    future.return()
+
+    return
+
+  Meteor.setTimeout delayed, Meteor.settings.simulatedLatency
+
+  future.wait()
 
 # match patterns
 _.extend Match,
@@ -37,6 +49,8 @@ Accounts.onCreateUser (options, user) ->
 # publish ubersafe user properties
 Meteor.publish "userUberSafeData", ->
   unless @userId then null
+
+  maybeWait()
 
   Meteor.users.find @userId,
     fields:

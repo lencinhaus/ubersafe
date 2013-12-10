@@ -6,3 +6,9 @@
   margin-top: 60px;
   width: 100%;
 }
+
+#nprogress {
+  .bar, .spinner {
+    z-index: @zindex-navbar-fixed + 1;
+  }
+}

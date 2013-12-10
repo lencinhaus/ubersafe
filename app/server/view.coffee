@@ -1,5 +1,7 @@
 # publish viewed document
 Meteor.publish "viewDocument", (documentId) ->
+  maybeWait()
+
   unless @userId then null
 
   check @userId, Match.NotEmptyString

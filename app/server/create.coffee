@@ -1,5 +1,7 @@
 Meteor.methods
   createDocument: (document, key) ->
+    maybeWait()
+
     check @userId, Match.NotEmptyString
 
     check document,

@@ -73,7 +73,7 @@ Template.contacts.countNonDeclinedContacts = (type) ->
 # check if we have contacts of a specific type (any status)
 Template.contacts.haveContacts = (type) ->
   if @type is type
-    return @contacts.count() > 0
+    return @contacts and @contacts.count() > 0
 
   selector = getSelectorByType type
   Contacts.find(selector).count() > 0
@@ -139,6 +139,8 @@ Template.contacts.events
       $("#button-add-contact").click()
 
   "click #button-add-contact": ->
+    self = this
+
     # validate the form
     $("#form-add-contact").parsley("validate").done (valid) ->
       unless valid then return
@@ -146,23 +148,33 @@ Template.contacts.events
       # add a contact request
       userId = $("#input-add-user-id").val()
 
+      # pause deps
+      #Deps.pause()
+
       Meteor.call "addContactRequest", userId, (error, result) ->
         if error
           FlashMessages.sendError __ "contacts.create.flash.error"
+          Deps.resume()
         else if result isnt true
           FlashMessages.sendInfo __ "contacts.create.flash.#{result}",
             pendingContactsPath: Router.routes["contacts"].path
               type: "pending"
             contactsPath: Router.routes["contacts"].path()
+
+          Deps.resume()
         else
           FlashMessages.sendSuccess __ "contacts.create.flash.success"
 
+          $("#modal-add-contact").one "hidden.bs.modal", ->
+            Deps.resume()
+
+            # if we are not on requests, redirect there
+            if "requests" isnt self.type
+              Router.go "contacts",
+                type: "requests"
+
           # close the modal
           $("#modal-add-contact").modal "hide"
-
-          # clear the form
-          $("#input-add-contact-user").val ""
-
 
 
 

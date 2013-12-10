@@ -1,11 +1,6 @@
-Meteor.startup ->
-  Notifications.allow
-    insert: (userId, notification) ->
-      true
-    remove: ->
-      true
-
 Meteor.publish "notifications", ->
+  maybeWait()
+
   unless @userId then null
 
   Notifications.find
@@ -39,7 +34,9 @@ setNotificationsFlag = (userId, ids, flag) ->
 
 Meteor.methods
   markSeenNotifications: (ids) ->
+    maybeWait()
     setNotificationsFlag @userId, ids, "seen"
 
   markClickedNotification: (notificationId) ->
+    maybeWait()
     setNotificationsFlag @userId, [notificationId], "clicked"

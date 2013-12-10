@@ -1,5 +1,7 @@
 # publish dashboard documents
 Meteor.publish "dashboardDocuments", (options) ->
+  maybeWait()
+
   unless @userId then null
 
   check @userId, Match.NotEmptyString

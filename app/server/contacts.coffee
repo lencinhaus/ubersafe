@@ -1,6 +1,6 @@
-# publish user contacts
+# add the other user's username to a contact
 getContactWithUsername = (userId, contact) ->
-  contactWithUsernames = _.clone contact
+  contactWithUsername = _.clone contact
 
   if contact.fromUserId is userId
     user = Meteor.users.findOne
@@ -10,11 +10,14 @@ getContactWithUsername = (userId, contact) ->
       _id: contact.fromUserId
 
   if user
-    contactWithUsernames.username = user.username
+    contactWithUsername.username = user.username
 
-  contactWithUsernames
+  contactWithUsername
 
+# publish user contacts
 Meteor.publish "contacts", ->
+  maybeWait()
+
   check @userId, Match.NotEmptyString
   self = this
 
@@ -44,6 +47,8 @@ Meteor.publish "contacts", ->
 Meteor.methods
   # find users whose username matches query
   queryUsers: (query) ->
+    maybeWait()
+
     check @userId, Match.NotEmptyString
     check query, Match.NotEmptyString
 
@@ -67,6 +72,8 @@ Meteor.methods
 
   # add a contact request
   addContactRequest: (contactUserId) ->
+    maybeWait()
+
     self = this
     check @userId, Match.NotEmptyString
     check contactUserId, Match.Where (userId) ->
@@ -111,4 +118,6 @@ Meteor.methods
 
   # accept a contact request
   acceptContactRequest: (contactId) ->
+    maybeWait()
+
     check @userId, Match.NotEmptyString
