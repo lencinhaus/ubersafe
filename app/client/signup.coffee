@@ -25,7 +25,7 @@ Template.signup.rendered = ->
 
   # password popover
   $("#input-signup-password").popover("destroy").popover
-    trigger: "click"
+    trigger: "focus"
     title: __ "signup.form.password.popover.title"
     content: __ "signup.form.password.popover.content"
 
