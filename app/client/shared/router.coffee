@@ -96,8 +96,7 @@ Router.configure
   before: checkEntropy
   layoutTemplate: "layout"
   notFoundTemplate: "notFound"
-  # no loading for now
-  #loadingTemplate: "loading"
+  loadingTemplate: "loading"
 
 # routes
 Router.map ->

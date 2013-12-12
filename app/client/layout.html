@@ -13,8 +13,8 @@
             <div class="navbar-collapse collapse">
                 {{#if currentUser}}
                 <ul class="nav navbar-nav">
-                    <li{{#if currentRouteStartsWith 'create'}} class="active"{{/if}}><a href="{{pathFor 'create'}}">{{__ 'layout.nav.create'}}</a></li>
-                    <li{{#if currentRouteStartsWith 'contacts'}} class="active"{{/if}}><a href="{{pathFor 'contacts'}}">{{__ 'layout.nav.contacts'}}</a></li>
+                    <li{{#if currentRouteStartsWith 'create'}} class="active"{{/if}}><a href="{{pathFor 'create'}}">{{{__ 'layout.nav.create'}}}</a></li>
+                    <li{{#if currentRouteStartsWith 'contacts'}} class="active"{{/if}}><a href="{{pathFor 'contacts'}}">{{{__ 'layout.nav.contacts'}}}</a></li>
                 </ul>
                 {{/if}}
 
@@ -30,7 +30,7 @@
                     {{#if currentUser}}
                     {{> notifications}}
                     <li>
-                        <a href="javascript:void(0)" id="link-logout">{{__ "layout.nav.logout"}}</a>
+                        <a href="javascript:void(0)" id="link-logout">{{{__ 'layout.nav.logout'}}}</a>
                     </li>
                     {{/if}}
                 </ul>
@@ -51,6 +51,8 @@
     <div class="container">
         {{yield}}
     </div>
+
+    {{> confirm}}
 </template>
 
 <template name="flashMessagesEnhanced">

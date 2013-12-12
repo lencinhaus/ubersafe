@@ -2,18 +2,21 @@
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <h1>{{__ 'contacts.title'}} <small>{{__ 'contacts.subtitle'}}</small></h1>
+                <h1>{{{__ 'contacts.title'}}} <small>{{{__ 'contacts.subtitle'}}}</small></h1>
             </div>
             <div class="navbar navbar-default">
                 <ul class="nav navbar-nav nav-pills">
-                    <li{{#if isType 'accepted'}} class="active"{{/if}}><a href="{{pathForContacts 'accepted'}}">Your contacts{{#if haveContacts 'accepted'}} <span class="badge">{{countNonDeclinedContacts 'accepted'}}</span>{{/if}}</a></li>
+                    <li{{#if isType 'accepted'}} class="active"{{/if}}><a href="{{pathForContacts 'accepted'}}">{{{__ 'contacts.nav.accepted'}}}{{#if haveContacts 'accepted'}} <span class="badge">{{countNonDeclinedContacts 'accepted'}}</span>{{/if}}</a></li>
                     {{#if haveContacts 'requests'}}
-                    <li{{#if isType 'requests'}} class="active"{{/if}}><a href="{{pathForContacts 'requests'}}">Your requests <span class="badge">{{countNonDeclinedContacts 'requests'}}</span></a></li>
+                    <li{{#if isType 'requests'}} class="active"{{/if}}><a href="{{pathForContacts 'requests'}}">{{{__ 'contacts.nav.requests'}}} <span class="badge">{{countNonDeclinedContacts 'requests'}}</span></a></li>
                     {{/if}}
                     {{#if haveContacts 'pending'}}
-                    <li{{#if isType 'pending'}} class="active"{{/if}}><a href="{{pathForContacts 'pending'}}">Requests from others <span class="badge">{{countNonDeclinedContacts 'pending'}}</span></a></li>
+                    <li{{#if isType 'pending'}} class="active"{{/if}}><a href="{{pathForContacts 'pending'}}">{{{__ 'contacts.nav.pending'}}} <span class="badge">{{countNonDeclinedContacts 'pending'}}</span></a></li>
                     {{/if}}
                 </ul>
+                <div class="navbar-form navbar-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-contact"><i class="fa fa-plus-circle fa-fw"></i> {{{__ 'common.buttons.add'}}}</button>
+                </div>
             </div>
             {{#if haveContacts type}}
             <div class="panel panel-default">
@@ -21,23 +24,21 @@
                     <thead>
                         <tr>
                             {{#if isType 'accepted'}}
-                            <th>User</th>
-                            <th>Requested</th>
-                            <th>Accepted</th>
+                            <th>{{{__ 'contacts.columns.user'}}}</th>
+                            <th>{{{__ 'contacts.columns.requested'}}}</th>
+                            <th>{{{__ 'contacts.columns.accepted'}}}</th>
                             {{/if}}
                             {{#if isType 'requests'}}
-                            <th>User</th>
-                            <th>Status</th>
-                            <th>Requested</th>
-                            <th>Answered</th>
+                            <th>{{{__ 'contacts.columns.user'}}}</th>
+                            <th>{{{__ 'contacts.columns.requested'}}}</th>
+                            <th>{{{__ 'contacts.columns.answer'}}}</th>
                             {{/if}}
                             {{#if isType 'pending'}}
-                            <th>From User</th>
-                            <th>Status</th>
-                            <th>Requested</th>
-                            <th>Answered</th>
+                            <th>{{{__ 'contacts.columns.fromUser'}}}</th>
+                            <th>{{{__ 'contacts.columns.requested'}}}</th>
+                            <th>{{{__ 'contacts.columns.answer'}}}</th>
                             {{/if}}
-                            <th class="column-actions">Actions</th>
+                            <th class="column-actions">{{{__ 'common.columns.actions'}}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,16 +48,15 @@
                             <td><strong>{{username}}</strong></td>
                             <td>
                                 {{formatDateFromNow requestedAt}}
-                                by
                                 {{#if isRequestedByMe}}
-                                    you
+                                    {{{__ 'contacts.rows.byYou'}}}
                                 {{else}}
-                                    her
+                                    {{{__ 'contacts.rows.byOther'}}}
                                 {{/if}}
                             </td>
                             <td>{{formatDateFromNow answeredAt}}</td>
                             <td>
-                                <button type="button" class="btn btn-danger button-remove">Remove</button>
+                                <button type="button" class="btn btn-danger button-remove" data-loading-text="{{__ 'contacts.buttons.remove.loading'}}">{{{__ 'contacts.buttons.remove.text'}}}</button>
                             </td>
                         </tr>
                         {{/each}}
@@ -65,18 +65,17 @@
                         {{#each contacts}}
                         <tr data-contact-id="{{_id}}">
                             <td><strong>{{username}}</strong></td>
-                            <td>{{status}}</td>
                             <td>{{formatDateFromNow requestedAt}}</td>
                             <td>
-                                {{#if answeredAt}}
-                                    {{formatDateFromNow answeredAt}}
+                                {{#if isStatus 'requested'}}
+                                    {{{__ 'contacts.rows.noAnswer'}}}
                                 {{else}}
-                                pending
+                                    {{statusLabel}} {{formatDateFromNow answeredAt}}
                                 {{/if}}
                             </td>
                             <td>
                                 {{#if isStatus "requested"}}
-                                <button type="button" class="btn btn-danger button-withdraw">Withdraw</button>
+                                <button type="button" class="btn btn-danger button-withdraw" data-loading-text="{{__ 'contacts.buttons.withdraw.loading'}}">{{{__ 'contacts.buttons.withdraw.text'}}}</button>
                                 {{/if}}
                             </td>
                         </tr>
@@ -86,22 +85,21 @@
                         {{#each contacts}}
                         <tr data-contact-id="{{_id}}">
                             <td><strong>{{username}}</strong></td>
-                            <td>{{status}}</td>
                             <td>{{formatDateFromNow requestedAt}}</td>
                             <td>
-                                {{#if answeredAt}}
-                                {{formatDateFromNow answeredAt}}
+                                {{#if isStatus 'requested'}}
+                                    {{{__ 'contacts.rows.noAnswer'}}}
                                 {{else}}
-                                pending
+                                    {{statusLabel}} {{formatDateFromNow answeredAt}}
                                 {{/if}}
                             </td>
                             <td>
                                 {{#if isStatus "requested"}}
-                                <button type="button" class="btn btn-success button-accept">Accept</button>
-                                <button type="button" class="btn btn-danger button-decline">Decline</button>
+                                <button type="button" class="btn btn-success button-accept" data-loading-text="{{__ 'contacts.buttons.accept.loading'}}">{{{__ 'contacts.buttons.accept.text'}}}</button>
+                                <button type="button" class="btn btn-danger button-decline" data-loading-text="{{__ 'contacts.buttons.decline.loading'}}">{{{__ 'contacts.buttons.decline.text'}}}</button>
                                 {{/if}}
                                 {{#if isStatus "declined"}}
-                                <button type="button" class="btn btn-default button-forget">Forget</button>
+                                <button type="button" class="btn btn-default button-forget" data-loading-text="{{__ 'contacts.buttons.forget.loading'}}">{{{__ 'contacts.buttons.forget.text'}}}</button>
                                 {{/if}}
                             </td>
                         </tr>
@@ -112,8 +110,8 @@
             </div>
             {{else}}
             <div class="jumbotron">
-                <p>{{__ 'contacts.empty.text'}}</p>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-add-contact">{{__ 'contacts.empty.create'}}</button>
+                <p>{{{__ 'contacts.empty.text'}}}</p>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-add-contact"><i class="fa fa-plus-circle fa-fw"></i> {{{__ 'contacts.empty.add'}}}</button>
             </div>
             {{/if}}
         </div>
@@ -123,7 +121,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{__ 'contacts.create.title'}}</h4>
+                    <h4 class="modal-title">{{{__ 'contacts.create.title'}}}</h4>
                 </div>
                 <div class="modal-body">
                     <div id="form-add-contact" class="form" role="form" data-parsley-namespace="data-parsley-" data-parsley-bind="true">
@@ -133,8 +131,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{__ 'common.buttons.close'}}</button>
-                    <button id="button-add-contact" type="button" class="btn btn-primary">{{__ 'contacts.create.form.add'}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{{__ 'common.buttons.close'}}}</button>
+                    <button id="button-add-contact" type="button" class="btn btn-primary">{{{__ 'contacts.create.form.add'}}}</button>
                 </div>
             </div>
         </div>

@@ -35,6 +35,13 @@ _.extend Meteor.i18nMessages,
       close:
         en: "Close"
         it: "Chiudi"
+      add:
+        en: "Add"
+        it: "Aggiungi"
+      ok: "Ok"
+      cancel:
+        en: "Cancel"
+        it: "Annulla"
     validation:
       required:
         en: "This value is required"
@@ -49,6 +56,14 @@ _.extend Meteor.i18nMessages,
         email:
           en: "This value should be a valid email"
           it: "Questo valore deve essere un indirizzo email valido"
+    flash:
+      error:
+        en: "Ouch! An error occurred, but someone will surely fix it soon. No really, please have faith and try again later."
+        it: "Ahia! C'è stato un errore, ma senz'altro qualcuno lo correggerà presto. No veramente, abbi fede e riprova più tardi."
+    columns:
+      actions:
+        en: "Actions"
+        it: "Azioni"
   layout:
     nav:
       logout: "Logout"
@@ -72,6 +87,26 @@ _.extend Meteor.i18nMessages,
     contactRequest:
       en: "<strong>{{fromUsername}}</strong> wants to add you to his contacts"
       it: "<strong>{{fromUsername}}</strong> vuole aggiungerti ai suoi contatti"
+    contactRequestAnswer:
+      accepted:
+        en: "<strong>{{fromUsername}}</strong> has accepted your contact request!"
+        it: "<strong>{{fromUsername}}</strong> ha accettato la tua richiesta di contatto!"
+      declined:
+        en: "<strong>{{fromUsername}}</strong> has declined your contact request :("
+        it: "<strong>{{fromUsername}}</strong> ha declinato la tua richiesta di contatto :("
+    contactRemoved:
+      en: "<strong>{{fromUsername}}</strong> has removed you from her contacts"
+      it: "<strong>{{fromUsername}}</strong> ti ha rimosso dai suoi contatti"
+    contactRequestWithdrawn:
+      en: "<strong>{{fromUsername}}</strong> has withdrawn her contact request"
+      it: "<strong>{{fromUsername}}</strong> ha annullato la sua richiesta di contatto"
+    contactRequestForgotten:
+      en: "Now you can send a contact request to <strong>{{fromUsername}}</strong> again"
+      it: "Ora puoi inviare nuovamente una richiesta di contatto a <strong>{{fromUsername}}</strong>"
+  confirm:
+    title:
+      en: "Attention Please!"
+      it: "Attenzione Attenzione!"
   signup:
     title:
       en: "Registration"
@@ -108,9 +143,6 @@ _.extend Meteor.i18nMessages,
       success:
         en: "Welcome to {{appName}}, {{username}}!"
         it: "Benvenuto in {{appName}}, {{username}}!"
-      error:
-        en: "Ouch! An error occurred, but someone will surely fix it soon. No really, please have faith and try again later."
-        it: "Ahia! C'è stato un errore, ma senz'altro qualcuno lo correggerà presto. No veramente, abbi fede e riprova più tardi."
   login:
     title: "Login"
     form:
@@ -216,9 +248,113 @@ _.extend Meteor.i18nMessages,
       text:
         en: "No contacts so far :("
         it: "Non hai ancora nessun contatto :("
-      create:
+      add:
         en: "Don't be a sociopath and add someone now!"
         it: "Non essere un sociopatico e aggiungi qualcuno ora!"
+    nav:
+      accepted:
+        en: "Your contacts"
+        it: "I tuoi contatti"
+      requests:
+        en: "Your requests"
+        it: "Le tue richieste"
+      pending:
+        en: "Requests from others"
+        it: "Richieste da altri"
+    columns:
+      user:
+        en: "User"
+        it: "Utente"
+      requested:
+        en: "Requested"
+        it: "Richiesto"
+      accepted:
+        en: "Accepted"
+        it: "Accettato"
+      answer:
+        en: "Answer"
+        it: "Risposta"
+      fromUser:
+        en: "From user"
+        it: "Dall'utente"
+    rows:
+      byYou:
+        en: "by you"
+        it: "da te"
+      byOther:
+        en: "by her"
+        it: "da lui"
+      noAnswer:
+        en: "none"
+        it: "nessuna"
+    status:
+      requested:
+        en: "requested"
+        it: "richiesto"
+      accepted:
+        en: "accepted"
+        it: "accettato"
+      declined:
+        en: "declined"
+        it: "declinato"
+    buttons:
+      remove:
+        text:
+          en: "Remove"
+          it: "Rimuovi"
+        loading:
+          en: "Removing"
+          it: "Sto rimuovendo"
+        confirm:
+          en: "<p>Removing this contact will have the following consequences:</p><ul><li>You and this user will not be able to share documents with each other anymore.</li><li>You will not be able to view or edit any document owned by this user, even if she already shared it with you.</li><li>This user will not be able to view or edit any document you own, even if you already shared it with her.</li></ul><p>Proceed?</p>"
+          it: "<p>Rimuovere questo contatto avrà i seguenti effetti:</p><ul><li>Tu e questo utente non sarete più in grado di condividere documenti l'uno con l'altro.</li><li>Non sarai più in grado di visualizzare o modificare alcun documento di proprietà di questo utente, anche se l'ha già condiviso con te.</li><li>Questo utente non sarà più in grado di visualizzare o modificare alcun documento di tua proprietà, anche se l'hai già condiviso con lui.</li></ul><p>Procedo?</p>"
+      accept:
+        text:
+          en: "Accept"
+          it: "Accetta"
+        loading:
+          en: "Accepting"
+          it: "Sto accettando"
+      decline:
+        text:
+          en: "Decline"
+          it: "Declina"
+        loading:
+          en: "Declining"
+          it: "Sto declinando"
+      withdraw:
+        text:
+          en: "Withdraw"
+          it: "Annulla"
+        loading:
+          en: "Withdrawing"
+          it: "Sto annullando"
+      forget:
+        text:
+          en: "Forget"
+          it: "Dimentica"
+        loading:
+          en: "Forgetting"
+          it: "Sto dimenticando"
+        confirm:
+          en: "<p>This user will be able to send you a contact request again.</p><p>Proceed?</p>"
+          it: "<p>Questo utente potrà inviarti nuovamente una richiesta di contatto.</p><p>Procedo?</p>"
+    flash:
+      acceptSuccess:
+        en: "Now <strong>{{username}}</strong> is one of your contacts"
+        it: "Ora <strong>{{username}}</strong> è un tuo contatto"
+      declineSuccess:
+        en: "<strong>{{username}}</strong>'s contact request has been declined. She won't disturb you again until you <em>Forget</em> this decision"
+        it: "La richiesta di contatto di <strong>{{username}}</strong> è stata declinata. Non ti disturberà più finche non deciderai di <em>Dimentica</em>re questa decisione"
+      forgetSuccess:
+        en: "Now <strong>{{username}}</strong> can send you a contact request again"
+        it: "Ora <strong>{{username}}</strong> può nuovamente inviarti una richiesta di contatto"
+      removeSuccess:
+        en: "You and <strong>{{username}}</strong> are no longer contacts of each other"
+        it: "Tu e <strong>{{username}}</strong> non siete più tra i contatti l'uno dell'altro"
+      withdrawSuccess:
+        en: "Your contact request has been withdrawn"
+        it: "La tua richiesta di contatto è stata annullata"
     create:
       title:
         en: "Add a contact"
@@ -235,9 +371,6 @@ _.extend Meteor.i18nMessages,
         success:
           en: "Your contact request has been sent! I'll notify you when the user accepts or declines your request."
           it: "La tua richiesta di contatto è stata inviata! Ti avviserò quando l'utente avrà accettato o declinato la tua richiesta."
-        error:
-          en: "Ouch, I cant send your contact request right now. Please try again later"
-          it: "Ahia, non riesco ad inviare la tua richiesta di contatto in questo momento. Per favore riprova più tardi"
         accepted:
           en: "You already have this user in your contacts!"
           it: "Hai già questo utente tra i tuoi contatti!"

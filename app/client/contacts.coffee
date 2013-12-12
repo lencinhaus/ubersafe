@@ -42,7 +42,9 @@ class @ContactsController extends RouteController
       contacts = Contacts.find selector,
         sort:
           username: 1
-      if "accepted" isnt type and contacts.count() is 0
+      .fetch()
+
+      if "accepted" isnt type and contacts.length is 0
         @redirect "contacts"
         return
 
@@ -60,6 +62,9 @@ Template.contacts.isType = (type) ->
 Template.contacts.isStatus = (status) ->
   @status is status
 
+Template.contacts.statusLabel = ->
+  __ "contacts.status.#{@status}"
+
 # check if an accepted contact has been requested by the current user or not
 Template.contacts.isRequestedByMe = ->
   @fromUserId is Meteor.userId()
@@ -73,7 +78,7 @@ Template.contacts.countNonDeclinedContacts = (type) ->
 # check if we have contacts of a specific type (any status)
 Template.contacts.haveContacts = (type) ->
   if @type is type
-    return @contacts and @contacts.count() > 0
+    return @contacts and @contacts.length > 0
 
   selector = getSelectorByType type
   Contacts.find(selector).count() > 0
@@ -86,13 +91,13 @@ Template.contacts.pathForContacts = (type) ->
       type: type
   Router.routes["contacts"].path(params)
 
-Template.contacts.created = ->
-  @firstRender = true
-  return
-
 Template.contacts.rendered = ->
-  if @firstRender
-    @firstRender = false
+  # table button confirms
+  $("#table-contacts .button-remove").confirm __ "contacts.buttons.remove.confirm"
+  $("#table-contacts .button-forget").confirm __ "contacts.buttons.forget.confirm"
+
+  unless @firstRenderDone
+    @firstRenderDone = true
 
     # when the add contact modal is showing...
     $("#modal-add-contact").on "show.bs.modal", ->
@@ -134,6 +139,129 @@ Template.contacts.rendered = ->
       $("#form-add-contact").parsley "destroy"
 
 Template.contacts.events
+  "click #table-contacts .button-accept": (evt) ->
+    self = this
+
+    # get the buttons
+    acceptButton = $(evt.target)
+    declineButton = acceptButton.parent().find('.button-decline')
+
+    # hide the decline button
+    declineButton.css "visibility", "hidden"
+
+    # set accept button to loading
+    acceptButton.button "loading"
+
+    Meteor.call "answerContactRequest", @_id, true, (error) ->
+      if error
+        console.error error
+
+        # restore the buttons
+        acceptButton.button "reset"
+        declineButton.css "visibility", "visible"
+
+        # show an error flash
+        FlashMessages.sendError __ "common.flash.error"
+      else
+        # show a success flash
+        FlashMessages.sendSuccess __ "contacts.flash.acceptSuccess", self
+
+        # go to accepted contacts
+        Router.go "contacts"
+
+  "click #table-contacts .button-decline": (evt) ->
+    self = this
+
+    # get the buttons
+    declineButton = $(evt.target)
+    acceptButton = declineButton.parent().find('.button-accept')
+
+    # hide the accept button
+    acceptButton.css "visibility", "hidden"
+
+    # set decline button to loading
+    declineButton.button "loading"
+
+    Meteor.call "answerContactRequest", @_id, false, (error) ->
+      if error
+        console.error error
+
+        # restore the buttons
+        declineButton.button "reset"
+        acceptButton.css "visibility", "visible"
+
+        # show an error flash
+        FlashMessages.sendError __ "common.flash.error"
+      else
+        # show a success flash
+        FlashMessages.sendSuccess __ "contacts.flash.declineSuccess", self
+
+  "confirmed.ubersafe.confirm #table-contacts .button-forget": (evt) ->
+    self = this
+
+    # get the button
+    forgetButton = $(evt.target)
+
+    # set button to loading
+    forgetButton.button "loading"
+
+    Meteor.call "removeContact", @_id, (error) ->
+      if error
+        console.error error
+
+        # restore the buttons
+        forgetButton.button "reset"
+
+        # show an error flash
+        FlashMessages.sendError __ "common.flash.error"
+      else
+        # show a success flash
+        FlashMessages.sendSuccess __ "contacts.flash.forgetSuccess", self
+
+  "confirmed.ubersafe.confirm #table-contacts .button-remove": (evt) ->
+    self = this
+
+    # get the button
+    removeButton = $(evt.target)
+
+    # set button to loading
+    removeButton.button "loading"
+
+    Meteor.call "removeContact", @_id, (error) ->
+      if error
+        console.error error
+
+        # restore the buttons
+        removeButton.button "reset"
+
+        # show an error flash
+        FlashMessages.sendError __ "common.flash.error"
+      else
+        # show a success flash
+        FlashMessages.sendSuccess __ "contacts.flash.removeSuccess", self
+
+  "click #table-contacts .button-withdraw": (evt) ->
+    self = this
+
+    # get the button
+    withdrawButton = $(evt.target)
+
+    # set button to loading
+    withdrawButton.button "loading"
+
+    Meteor.call "removeContact", @_id, (error) ->
+      if error
+        console.error error
+
+        # restore the buttons
+        withdrawButton.button "reset"
+
+        # show an error flash
+        FlashMessages.sendError __ "common.flash.error"
+      else
+        # show a success flash
+        FlashMessages.sendSuccess __ "contacts.flash.withdrawSuccess", self
+
   "keyup #form-add-contact input": (evt) ->
     if evt.which is 13
       $("#button-add-contact").click()
@@ -153,7 +281,7 @@ Template.contacts.events
 
       Meteor.call "addContactRequest", userId, (error, result) ->
         if error
-          FlashMessages.sendError __ "contacts.create.flash.error"
+          FlashMessages.sendError __ "common.flash.error"
           Deps.resume()
         else if result isnt true
           FlashMessages.sendInfo __ "contacts.create.flash.#{result}",

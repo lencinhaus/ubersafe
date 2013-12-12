@@ -1,6 +1,6 @@
-#i18n
-Handlebars.registerHelper "__", (message, params) ->
-  new Handlebars.SafeString(__(message, params))
+# i18n
+Handlebars.registerHelper "__", (message, params, escape) ->
+  __(message, params)
 
 
 # locales
@@ -33,6 +33,18 @@ Handlebars.registerHelper "formatDate", (date) ->
 
 Handlebars.registerHelper "formatDateFromNow", (date) ->
   moment(date).fromNow()
+
+# settings
+Handlebars.registerHelper "settings", (path) ->
+  # retrieve a setting by specifying its property path inside Meteor.settings.public
+  parent = Meteor.settings.public
+  props = path.split "."
+  for i in [0...(props.length - 1)]
+    prop = props[i]
+    unless parent[prop] then return null
+    parent = parent[prop]
+
+  parent[props[props.length - 1]]
 
 # debug
 Handlebars.registerHelper "dump", (obj) ->

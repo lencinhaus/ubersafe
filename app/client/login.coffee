@@ -6,13 +6,13 @@ Template.login.created = ->
   return
 
 Template.login.rendered = ->
+  # setup form validation
+  parsleyOptions = getBaseParsleyOptions()
+
+  $("#form-login").parsley("destroy").parsley parsleyOptions
+
   if @firstRender
     @firstRender = false
-
-    # setup form validation
-    parsleyOptions = getBaseParsleyOptions()
-
-    $("#form-login").parsley parsleyOptions
 
     if UberSafe.getLastUsername()
       $("#input-login-password").focus()

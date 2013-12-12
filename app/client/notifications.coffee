@@ -5,19 +5,28 @@ Deps.autorun ->
 dropdownOpen = false
 
 Template.notifications.notifications = ->
-  Notifications.find().fetch()
+  Notifications.find {},
+    sort:
+      createdAt: -1
+  .fetch()
 
 Template.notifications.unseen = ->
   Notifications.find
     seen: false
   .count()
 
-Template.notifications.typeIs = (type) ->
+Template.notifications.isType = (type) ->
   @type is type
 
-Template.notifications.pathForPendingContacts = ->
-  Router.routes["contacts"].path
-    type: "pending"
+Template.notifications.isStatus = (status) ->
+  @status is status
+
+Template.notifications.pathForContacts = (type) ->
+  if "accepted" is type
+    Router.routes["contacts"].path()
+  else
+    Router.routes["contacts"].path
+      type: type
 
 Template.notifications.dropdownClasses = ->
   classes = "dropdown"

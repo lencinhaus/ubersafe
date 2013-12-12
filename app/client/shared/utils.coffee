@@ -15,6 +15,13 @@ if typeof String::endsWith isnt 'function'
     errors:
       classHandler: (el) ->
         $(el).closest ".form-group"
+      container: (el) ->
+        # if the field is inside an input group, use the input group's parent
+        $parent = $(el).parent()
+        if $parent.hasClass "input-group"
+          return $parent.parent()
+
+        return $parent
       errorsWrapper: "<div class=\"help-block\"></div>"
       errorElem: "<div></div>"
 

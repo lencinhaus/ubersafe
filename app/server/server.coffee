@@ -2,7 +2,7 @@ Future = Npm.require "fibers/future"
 
 # add synthetic latency to a function call, for remote server simulation
 @maybeWait = () ->
-  if Meteor.settings.simulatedLatency is 0 then return
+  if Meteor.settings.simulatedLatency <= 0 then return
 
   future = new Future
 

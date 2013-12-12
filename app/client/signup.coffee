@@ -5,31 +5,30 @@ Template.signup.created = ->
   return
 
 Template.signup.rendered = ->
+  # setup form validation
+  parsleyOptions = getBaseParsleyOptions()
+
+  _.deepExtend parsleyOptions,
+    validators:
+      unique: ->
+        validate: (value, property, self) ->
+          deferred = $.Deferred()
+          Meteor.call "checkUserUniqueProperty", property, value, (error, unique) ->
+            if error
+              deferred.reject
+            else
+              deferred.resolveWith self, [unique]
+
+          deferred.promise()
+        priority: 64
+
+    messages:
+      unique: __ "signup.validation.unique"
+
+  $("#form-signup").parsley("destroy").parsley parsleyOptions
+
   if @firstRender
     @firstRender = false
-
-    # setup form validation
-    parsleyOptions = getBaseParsleyOptions()
-
-    _.extend parsleyOptions,
-      validators:
-        unique: ->
-          validate: (value, property, self) ->
-            deferred = $.Deferred()
-            Meteor.call "checkUserUniqueProperty", property, value, (error, unique) ->
-              if error
-                deferred.reject
-              else
-                deferred.resolveWith self, [unique]
-
-            deferred.promise()
-          priority: 64
-
-      messages:
-        unique: __ "signup.validation.unique"
-
-
-    $("#form-signup").parsley parsleyOptions
 
     # focus on the username
     $("#input-signup-username").focus()
@@ -65,7 +64,7 @@ Template.signup.events
           console.error error
 
           # add an error flash
-          FlashMessages.sendError __ "signup.flash.error"
+          FlashMessages.sendError __ "common.flash.error"
         else
           # save the last username
           UberSafe.setLastUsername user.username

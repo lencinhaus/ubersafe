@@ -1,0 +1,29 @@
+<template name="confirm">
+    <div id="modal-confirm" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content alert">
+                <div class="modal-header">
+                    <h4 class="modal-title text-danger">{{{__ 'confirm.title'}}}</h4>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <i class="fa fa-warning fa-5x text-danger"></i>
+                                </th>
+                                <td>
+                                    <div id="confirm-message"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="button-confirm-cancel" type="button" class="btn btn-default">{{{__ 'common.buttons.cancel'}}}</button>
+                    <button id="button-confirm-ok" type="button" class="btn btn-danger">{{{__ 'common.buttons.ok'}}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

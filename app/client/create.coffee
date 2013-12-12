@@ -5,14 +5,15 @@ Template.create.created = ->
   return
 
 Template.create.rendered = ->
+  # setup form validation
+  parsleyOptions = getBaseParsleyOptions()
+
+  $("#form-create").parsley("destroy").parsley parsleyOptions
+
   if @firstRender
     @firstRender = false
 
-    # setup form validation
-    parsleyOptions = getBaseParsleyOptions()
-
-    $("#form-create").parsley parsleyOptions
-
+    # focus on the title
     $("#input-create-title").focus()
 
 Template.create.events

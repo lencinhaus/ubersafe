@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <h1>{{__ 'dashboard.title'}} <small>{{__ 'dashboard.subtitle'}}</small></h1>
+                <h1>{{{__ 'dashboard.title'}}} <small>{{{__ 'dashboard.subtitle'}}}</small></h1>
             </div>
             {{#if haveDocuments}}
             <div class="navbar navbar-default">
@@ -26,7 +26,7 @@
                                 </a>
                             </th>
                             {{/each}}
-                            <th class="column-actions">{{__ 'dashboard.documents.columns.actions'}}</th>
+                            <th class="column-actions">{{{__ 'dashboard.documents.columns.actions'}}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,8 +43,8 @@
             </div>
             {{else}}
             <div class="jumbotron">
-                <p>{{__ 'dashboard.empty.text'}}</p>
-                <a role="button" class="btn btn-primary btn-lg" href="{{pathFor 'create'}}">{{__ 'dashboard.empty.create'}}</a>
+                <p>{{{__ 'dashboard.empty.text'}}}</p>
+                <a role="button" class="btn btn-primary btn-lg" href="{{pathFor 'create'}}"><i class="fa fa-plus-circle fa-fw"></i> {{{__ 'dashboard.empty.create'}}}</a>
             </div>
             {{/if}}
         </div>

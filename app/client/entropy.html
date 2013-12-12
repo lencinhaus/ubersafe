@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <h1>{{__ 'entropy.title'}} <small>{{__ 'entropy.subtitle'}}</small></h1>
+                <h1>{{{__ 'entropy.title'}}} <small>{{{__ 'entropy.subtitle'}}}</small></h1>
             </div>
             <div class="jumbotron">
-                <h2>{{__ 'entropy.heading'}}</h2>
-                <p>{{__ 'entropy.text'}}</p>
+                <h2>{{{__ 'entropy.heading'}}}</h2>
+                <p>{{{__ 'entropy.text'}}}</p>
                 <div class="progress">
                     {{> entropyProgress}}
                 </div>
@@ -17,6 +17,6 @@
 
 <template name="entropyProgress">
     <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{progress}}" style="{{progressStyle}}">
-        <span class="sr-only">{{progress}}% {{__ 'entropy.complete'}}</span>
+        <span class="sr-only">{{progress}}% {{{__ 'entropy.complete'}}}</span>
     </div>
 </template>

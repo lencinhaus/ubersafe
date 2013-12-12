@@ -1,12 +1,29 @@
 <template name="notifications">
     {{#if notifications}}
     <li id="dropdown-notifications" class="{{dropdownClasses}}">
-        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{__ 'layout.nav.notifications'}}{{#if unseen}} <span class="badge">{{unseen}}</span>{{/if}} <i class="fa fa-caret-down fa-fw"></i></a>
+        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{{__ 'layout.nav.notifications'}}}{{#if unseen}} <span class="badge">{{unseen}}</span>{{/if}} <i class="fa fa-caret-down fa-fw"></i></a>
         <ul class="dropdown-menu">
             {{#each notifications}}
             <li class="notification {{type}}{{#if clicked}} clicked{{/if}}{{#if seen}} seen{{/if}}">
-                {{#if typeIs 'contactRequest'}}
-                <a href="{{pathForPendingContacts}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{__ 'notifications.contactRequest' this}}</a>
+                {{#if isType 'contactRequest'}}
+                <a href="{{pathForContacts 'pending'}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{{__ 'notifications.contactRequest' this}}}</a>
+                {{/if}}
+                {{# if isType 'contactRequestAnswer'}}
+                    {{# if isStatus 'accepted' }}
+                    <a href="{{pathForContacts 'accepted'}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{{__ 'notifications.contactRequestAnswer.accepted' this}}}</a>
+                    {{/if}}
+                    {{# if isStatus 'declined' }}
+                    <a href="{{pathForContacts 'requests'}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{{__ 'notifications.contactRequestAnswer.declined' this}}}</a>
+                    {{/if}}
+                {{/if}}
+                {{#if isType 'contactRemoved'}}
+                <a href="{{pathForContacts 'accepted'}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{{__ 'notifications.contactRemoved' this}}}</a>
+                {{/if}}
+                {{#if isType 'contactRequestWithdrawn'}}
+                <a href="{{pathForContacts 'accepted'}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{{__ 'notifications.contactRequestWithdrawn' this}}}</a>
+                {{/if}}
+                {{#if isType 'contactRequestForgotten'}}
+                <a href="{{pathForContacts 'accepted'}}" data-contact-id="{{contactId}}"><i class="fa fa-user"></i> {{{__ 'notifications.contactRequestForgotten' this}}}</a>
                 {{/if}}
             </li>
             {{/each}}
