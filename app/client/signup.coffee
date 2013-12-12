@@ -1,9 +1,5 @@
 Template.signup.minPasswordLength = Meteor.settings.public.password.minLength
 
-Template.signup.created = ->
-  @firstRender = true
-  return
-
 Template.signup.rendered = ->
   # setup form validation
   parsleyOptions = getBaseParsleyOptions()
@@ -27,8 +23,14 @@ Template.signup.rendered = ->
 
   $("#form-signup").parsley("destroy").parsley parsleyOptions
 
-  if @firstRender
-    @firstRender = false
+  # password popover
+  $("#input-signup-password").popover("destroy").popover
+    trigger: "click"
+    title: __ "signup.form.password.popover.title"
+    content: __ "signup.form.password.popover.content"
+
+  unless @renderedOnce
+    @renderedOnce = true
 
     # focus on the username
     $("#input-signup-username").focus()

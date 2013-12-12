@@ -52,8 +52,7 @@ Meteor.methods
     check @userId, Match.NotEmptyString
     check query, Match.NotEmptyString
 
-    # create a regex pattern from query, see http://stackoverflow.com/a/6969486/282034
-    queryPattern = query.replace /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"
+    queryPattern = quoteRegexPattern query
 
     Meteor.users.find
       _id:

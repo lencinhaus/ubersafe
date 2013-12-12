@@ -12,6 +12,7 @@ Package.on_use(function (api, where) {
 
   api.add_files('underscore.mixin.deepExtend.coffee', ['client', 'server']);
   api.add_files('settings.default.coffee', ['client', 'server']);
+  api.add_files('utils.coffee', ['client', 'server']);
   api.add_files('model.coffee', ['client', 'server']);
   api.add_files('ubersafe.coffee', 'client');
   api.add_files('cryptobot.coffee', 'client');

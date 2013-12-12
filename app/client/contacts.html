@@ -4,7 +4,7 @@
             <div class="page-header">
                 <h1>{{{__ 'contacts.title'}}} <small>{{{__ 'contacts.subtitle'}}}</small></h1>
             </div>
-            <div class="navbar navbar-default">
+            <div class="navbar navbar-default" role="navigation">
                 <ul class="nav navbar-nav nav-pills">
                     <li{{#if isType 'accepted'}} class="active"{{/if}}><a href="{{pathForContacts 'accepted'}}">{{{__ 'contacts.nav.accepted'}}}{{#if haveContacts 'accepted'}} <span class="badge">{{countNonDeclinedContacts 'accepted'}}</span>{{/if}}</a></li>
                     {{#if haveContacts 'requests'}}
@@ -16,6 +16,14 @@
                 </ul>
                 <div class="navbar-form navbar-right">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-contact"><i class="fa fa-plus-circle fa-fw"></i> {{{__ 'common.buttons.add'}}}</button>
+                </div>
+                <div class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <div class="input-group" style="width: 300px;">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <input id="contacts-search" type="text" class="form-control" placeholder="{{__ 'contacts.search.placeholder'}}" value="{{searchQuery}}" style="width: 250px; /* see https://github.com/twbs/bootstrap/issues/9950 */" />
+                        </div>
+                    </div>
                 </div>
             </div>
             {{#if haveContacts type}}
@@ -110,8 +118,12 @@
             </div>
             {{else}}
             <div class="jumbotron">
+                {{#if searchQuery}}
+                <p>{{{__ 'contacts.empty.search'}}}</p>
+                {{else}}
                 <p>{{{__ 'contacts.empty.text'}}}</p>
                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-add-contact"><i class="fa fa-plus-circle fa-fw"></i> {{{__ 'contacts.empty.add'}}}</button>
+                {{/if}}
             </div>
             {{/if}}
         </div>

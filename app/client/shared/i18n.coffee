@@ -124,6 +124,13 @@ _.extend Meteor.i18nMessages,
         placeholder:
           en: "Your password here"
           it: "La tua password"
+        popover:
+          title:
+            en: "Password strength"
+            it: "Sicurezza della password"
+          content:
+            en: "It is very important that your password will be strong, and that you'll remember it because noone, including us, can restore it"
+            it: "E' molto importante che la tua password sia forte, e che te la ricordi perchè nessuno, noi compresi, può recuperarla"
       passwordConfirm:
         label:
           en: "Confirm Password"
@@ -244,6 +251,10 @@ _.extend Meteor.i18nMessages,
     subtitle:
       en: "your little circle of trust"
       it: "il tuo piccolo cerchio della fiducia"
+    search:
+      placeholder:
+        en: "search by username"
+        it: "cerca per nome utente"
     empty:
       text:
         en: "No contacts so far :("
@@ -251,6 +262,9 @@ _.extend Meteor.i18nMessages,
       add:
         en: "Don't be a sociopath and add someone now!"
         it: "Non essere un sociopatico e aggiungi qualcuno ora!"
+      search:
+        en: "No contact with this username"
+        it: "Nessun contatto con questo nome utente"
     nav:
       accepted:
         en: "Your contacts"

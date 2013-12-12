@@ -29,6 +29,11 @@ getSelectorByType = (type, status) ->
         selector.status =
           $in: ["requested", "declined"]
 
+  searchQuery = Session.get "contactsSearchQuery"
+  if searchQuery
+    selector.username =
+      $regex: new RegExp quoteRegexPattern(searchQuery), "i"
+
   selector
 
 class @ContactsController extends RouteController
@@ -53,6 +58,10 @@ class @ContactsController extends RouteController
     else
       @stop()
       return
+
+# check if there's a search query
+Template.contacts.searchQuery = ->
+  Session.get "contactsSearchQuery"
 
 # check current contacts type
 Template.contacts.isType = (type) ->
@@ -261,6 +270,10 @@ Template.contacts.events
       else
         # show a success flash
         FlashMessages.sendSuccess __ "contacts.flash.withdrawSuccess", self
+
+  # update the search query
+  "keyup #contacts-search": ->
+    Session.set "contactsSearchQuery", $("#contacts-search").val().trim()
 
   "keyup #form-add-contact input": (evt) ->
     if evt.which is 13
