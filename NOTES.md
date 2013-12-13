@@ -124,9 +124,16 @@ There are three actors involved in this process:
 * The contact that shares the document which has to be un-shared. We'll call him *un-shared contact*
 * The other contacts that share the document, which will keep sharing it. We'll call them *other contacts*
 
+When a document is un-shared, two copies of it are created.
+One copy will be owned by *owner* and shared by *other contacts*, while the other will be owned by *un-shared contact* and shared with no-one initially.
+This ensures that *un-shared contact* can keep seeing and updating the document as it was before being un-shared, but will not see further modifications to the document by *owner* and *other contacts*.
+Both copies of the document will have their content encrypted with new random keys.
+
 The process is slightly different depending on whether it is initiated by the document *owner* or by one of his contacts.
 
 #### Initiated by document owner
+
+On *owner*'s side:
 
 * *owner* requests that a document he has shared with *un-shared contact* is un-shared
 * Client asks server the *public keys* of all *owner*'s contacts which the document is shared with, including *un-shared contact* and *other contacts*
@@ -147,13 +154,24 @@ The process is slightly different depending on whether it is initiated by the do
 > * new encrypted document *content* for *owner* and *other contacts*
 > * new encrypted document *content* for *un-shared contact*
 
-* Server creates a new document for *un-shared contact* using the new provided encrypted document *content*.
-* Server binds the new document for *un-shared contact* to *un-shared contact* using the provided encrypted document *key*, and marks it as "needing to be re-keyed"
-* Server creates a new document for *owner* and *other contacts* using the new provided encrypted document *content*.
-* Server binds the new document for *owner* to *owner* and each contact in *other contacts* using the provided encrypted document *keys*
+* Server creates a new document *A* for *un-shared contact* using the new provided encrypted document *content*.
+* Server binds document *A* to *un-shared contact* using the provided encrypted document *key*, and sets "needs re-keying" to true
+* Server creates a new document *B* for *owner* and *other contacts* using the new provided encrypted document *content*.
+* Server binds document *B* to *owner* and each contact in *other contacts* using the provided encrypted document *keys*
 * Server removes the original document
 
+Later, on *un-shared contact*'s side:
+
+* Server tells client about document *A* and the fact that it has to be re-keyed
+* Client generates a new random symmetric *key* for the document
+* Client encrypts document *content* symmetrically with new document *key*
+* Client encrypts new document *key* asymmetrically with user's *public key*
+* Client sends encrypted *content* and new encrypted document *key* to server
+* Server updates document *A* with encrypted *content* and *key*, and sets "needs re-keying" to false
+
 #### Initiated by document owner's contact
+
+On *un-shared contact*'s side:
 
 * *un-shared contact* requests that a document *owner* has shared with her is un-shared
 * Client asks server the *public keys* of *owner* and *other contacts*
@@ -174,11 +192,22 @@ The process is slightly different depending on whether it is initiated by the do
 > * new encrypted document *content* for *owner* and *other contacts*
 > * new encrypted document *content* for *un-shared contact*
 
-* Server creates a new document for *un-shared contact* using the new provided encrypted document *content*.
-* Server binds the new document for *un-shared contact* to *un-shared contact* using the provided encrypted document *key*
-* Server creates a new document for *owner* and *other contacts* using the new provided encrypted document *content*.
-* Server binds the new document for *owner* to *owner* and each contact in *other contacts* using the provided encrypted document *keys*, and marks them as "needing to be re-keyed"
+* Server creates a new document *A* for *un-shared contact* using the new provided encrypted document *content*.
+* Server binds document *A* to *un-shared contact* using the provided encrypted document *key*
+* Server creates a new document *B* for *owner* and *other contacts* using the new provided encrypted document *content*.
+* Server binds document *B* to *owner* and each contact in *other contacts* using the provided encrypted document *keys*, and setting "needs re-keying" to true
 * Server removes the original document
+
+Later, on *owner*'s side:
+
+* Server tells client about document *B* and the fact that it has to be re-keyed
+* Client asks server the *public keys* of *other contacts*
+* Server sends the requested *public keys*
+* Client generates a new random symmetric *key* for the document
+* Client encrypts document *content* symmetrically with new document *key*
+* For *owner* and each contact in *other contacts*, client encrypts new document *key* asymmetrically with user's *public key*
+* Client sends encrypted *content* and new encrypted document *keys* to server
+* Server updates document *B* with encrypted *content* and *keys* for *owner* and *other contacts*, and sets "needs re-keying" to false
 
 ### Contact removal
 
