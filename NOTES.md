@@ -131,7 +131,7 @@ Both copies of the document will have their content encrypted with new random ke
 
 The process is slightly different depending on whether it is initiated by the document *owner* or by one of his contacts.
 
-#### Initiated by document owner
+#### Initiated by *owner*
 
 On *owner*'s side:
 
@@ -169,7 +169,7 @@ Later, on *un-shared contact*'s side:
 * Client sends encrypted *content* and new encrypted document *key* to server
 * Server updates document *A* with encrypted *content* and *key*, and sets "needs re-keying" to false
 
-#### Initiated by document owner's contact
+#### Initiated by *un-shared contact*
 
 On *un-shared contact*'s side:
 
