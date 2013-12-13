@@ -263,8 +263,8 @@ _.extend Meteor.i18nMessages,
         en: "Don't be a sociopath and add someone now!"
         it: "Non essere un sociopatico e aggiungi qualcuno ora!"
       search:
-        en: "No contact with this username"
-        it: "Nessun contatto con questo nome utente"
+        en: "No contact matches your search"
+        it: "Nessun contatto corrisponde alla tua ricerca"
     nav:
       accepted:
         en: "Your contacts"

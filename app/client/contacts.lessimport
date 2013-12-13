@@ -2,6 +2,10 @@
   vertical-align: middle;
 }
 
+#table-contacts.table-hover tr {
+  cursor: pointer;
+}
+
 .column-actions {
   width: 20%;
 }

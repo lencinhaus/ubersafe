@@ -28,7 +28,7 @@
             </div>
             {{#if haveContacts type}}
             <div class="panel panel-default">
-                <table class="table table-hover" id="table-contacts">
+                <table class="table{{#if isType 'accepted'}} table-hover{{/if}}" id="table-contacts">
                     <thead>
                         <tr>
                             {{#if isType 'accepted'}}
