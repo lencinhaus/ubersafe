@@ -2,7 +2,11 @@ Package.describe({
     summary: "UberSafe core stuff"
 });
 
-Npm.depends({mongodb: "1.3.19"});
+Npm.depends({
+  // 1.3.19, plus a patch to add oplogReplay flag:
+  // https://github.com/mongodb/node-mongodb-native/pull/1108
+  mongodb: "https://github.com/meteor/node-mongodb-native/tarball/779bbac916a751f305d84c727a6cc7dfddab7924"
+});
 
 Package.on_use(function (api, where) {
   api.use(['underscore', 'coffeescript', 'moment', 'sjcl', 'jquery']);

@@ -112,6 +112,11 @@ Template.contacts.rendered = ->
     $("#modal-add-contact").on "show.bs.modal", ->
       # setup form validation
       parsleyOptions = getBaseParsleyOptions()
+      invalidUsernameMessage = __ "contacts.create.form.validation.username"
+      _.deepExtend parsleyOptions,
+        messages:
+          required: invalidUsernameMessage
+          notblank: invalidUsernameMessage
 
       $("#form-add-contact").parsley parsleyOptions
 

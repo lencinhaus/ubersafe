@@ -111,11 +111,11 @@ _.extend Meteor.i18nMessages,
     title:
       en: "Registration"
       it: "Registrazione"
-    validation:
-      unique:
-        en: "Another user exists with these credentials"
-        it: "Esiste già un altro utente con queste credenziali"
     form:
+      validation:
+        unique:
+          en: "Another user exists with these credentials"
+          it: "Esiste già un altro utente con queste credenziali"
       email:
         placeholder:
           en: "Your email here"
@@ -374,6 +374,10 @@ _.extend Meteor.i18nMessages,
         en: "Add a contact"
         it: "Aggiungi un contatto"
       form:
+        validation:
+          username:
+            en: "You must choose a valid username"
+            it: "Devi scegliere un nome utente valido"
         username:
           placeholder:
             en: "Start typing an username and I'll suggest"
