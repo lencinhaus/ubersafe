@@ -9,7 +9,7 @@ Npm.depends({
 });
 
 Package.on_use(function (api, where) {
-  api.use(['underscore', 'coffeescript', 'moment', 'sjcl', 'jquery']);
+  api.use(['underscore', 'coffeescript', 'moment', 'sjcl', 'jquery', 'deps']);
 
   // load moment locales
   api.add_files('../moment/lib/moment/lang/it.js', 'client');

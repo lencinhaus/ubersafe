@@ -67,6 +67,9 @@ _.extend Meteor.i18nMessages,
   layout:
     nav:
       logout: "Logout"
+      showPublicKey:
+        en: "View your Public Key"
+        it: "Visualizza la tua Chiave Pubblica"
       create:
         en: "Create"
         it: "Crea"
@@ -83,6 +86,10 @@ _.extend Meteor.i18nMessages,
       logoutError:
         en: "An error occurred, can't let you go right now. I'm overly attached, I know."
         it: "Si è verificato un errore, non riesco a lasciarti andare in questo momento. Sono troppo attaccato, lo so."
+    publicKey:
+      title:
+        en: "Your Public Key"
+        it: "La tua Chiave Pubblica"
   notifications:
     contactRequest:
       en: "<strong>{{fromUsername}}</strong> wants to add you to his contacts"

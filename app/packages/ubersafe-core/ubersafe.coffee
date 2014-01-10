@@ -1,13 +1,16 @@
 # constants
 LOCAL_STORAGE_LAST_USERNAME_KEY = 'UberSafe.lastUsername'
-ECC_CURVE = sjcl.ecc.curves["c256"]
+ECC_CURVE = sjcl.ecc.curves["c384"]
+SERIALIZATION_CODEC = sjcl.codec.hex
+
+# deps
+keysDependency = new Deps.Dependency()
 
 # set default paranoia
 sjcl.random.setDefaultParanoia(Meteor.settings.public.paranoia)
 
 # start the entropy collectors
 sjcl.random.startCollectors()
-
 
 # initialization
 Meteor.startup ->
@@ -33,15 +36,23 @@ setupKeyManagement = ->
     user = Meteor.user()
     if user
       # grab keys when a user signs in
-      publicPointBits = JSON.parse user.ubersafe.keys.public
-      secretExponentBits = JSON.parse UberSafe.decryptSymmetric user.ubersafe.keys.secretEncrypted
+      publicPointBits = SERIALIZATION_CODEC.toBits(user.ubersafe.keys.public)
+      secretExponentBits = SERIALIZATION_CODEC.toBits(UberSafe.decryptSymmetric(sjcl.codec.utf8String.fromBits(SERIALIZATION_CODEC.toBits(user.ubersafe.keys.privateEncrypted))))
+      secretExponentBn = sjcl.bn.fromBits(secretExponentBits)
+
       UberSafe._keys =
-        pub: new sjcl.ecc.elGamal.publicKey ECC_CURVE, publicPointBits
-        sec: new sjcl.ecc.elGamal.secretKey ECC_CURVE, sjcl.bn.fromBits secretExponentBits
+        publicSerialized: user.ubersafe.keys.public
+        encryption:
+          pub: new sjcl.ecc.elGamal.publicKey ECC_CURVE, publicPointBits
+          sec: new sjcl.ecc.elGamal.secretKey ECC_CURVE, secretExponentBn
+        signing:
+          pub: new sjcl.ecc.ecdsa.publicKey ECC_CURVE, publicPointBits
+          sec: new sjcl.ecc.ecdsa.secretKey ECC_CURVE, secretExponentBn
     else
       # forget keys and password when she signs out
       UberSafe._password = UberSafe._keys = null
 
+    keysDependency.changed()
     return
 
 # API
@@ -68,10 +79,21 @@ UberSafe =
 
     return
 
-  generateKeys: ->
+  generateUserKeys: ->
     keys = sjcl.ecc.elGamal.generateKeys ECC_CURVE
-    public: JSON.stringify keys.pub._point.toBits()
-    secretEncrypted: @encryptSymmetric JSON.stringify keys.sec.get()
+    publicPoint = keys.pub.get()
+    secretExponentBits = keys.sec.get()
+
+    public: SERIALIZATION_CODEC.fromBits(publicPoint.x) + SERIALIZATION_CODEC.fromBits(publicPoint.y)
+    privateEncrypted: SERIALIZATION_CODEC.fromBits(sjcl.codec.utf8String.toBits(@encryptSymmetric(SERIALIZATION_CODEC.fromBits(secretExponentBits))))
+
+  hasKeys: ->
+    keysDependency.depend()
+    return !!@_keys
+
+  getPublicKey: ->
+    ensureKeys()
+    @_keys.publicSerialized
 
   encryptSymmetric: (plaintext) ->
     ensurePassword()
@@ -83,11 +105,28 @@ UberSafe =
 
   encryptAsymmetric: (plaintext) ->
     ensureKeys()
-    sjcl.encrypt @_keys.pub, plaintext
+    sjcl.encrypt @_keys.encryption.pub, plaintext
 
   decryptAsymmetric: (ciphertext) ->
     ensureKeys()
-    sjcl.decrypt @_keys.sec, ciphertext
+    sjcl.decrypt @_keys.encryption.sec, ciphertext
+
+  sign: (data) ->
+    hash = sjcl.hash.sha512.hash data
+    signatureBits = @_keys.signing.sec.sign hash
+    SERIALIZATION_CODEC.fromBits signatureBits
+
+  verify: (data, signature) ->
+    hash = sjcl.hash.sha512.hash data
+    signatureBits = SERIALIZATION_CODEC.toBits signature
+
+    try
+      if @_keys.signing.pub.verify hash, signatureBits then true
+    catch error
+      unless error instanceof sjcl.exception.corrupt
+        throw error
+
+    false
 
   generateDocumentKey: ->
     key: sjcl.random.randomWords 8

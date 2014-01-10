@@ -20,6 +20,9 @@ Template.layout.events
         FlashMessages.sendSuccess __ "layout.flash.logoutSuccess",
           username: username
 
+  "click #link-show-public-key": (evt) ->
+    evt.preventDefault()
+
 Template.flashMessagesEnhanced.helpers
   messages: ->
     if flashMessages.find().count()
@@ -44,3 +47,18 @@ Template.flashMessageEnhanced.events
   "click .close": (e, tmpl) ->
     e.preventDefault()
     flashMessages.remove tmpl.data._id
+
+Template.publicKey.formattedPublicKey = ->
+  formattedPublicKey = ""
+  if UberSafe.hasKeys()
+    publicKey = UberSafe.getPublicKey()
+    tokens = for i in [0..publicKey.length] by 24
+      publicKey.substring(i, i + 24)
+
+    formattedPublicKey = tokens.join "\n"
+
+  formattedPublicKey
+
+Template.publicKey.rendered = ->
+  $('#modal-public-key').on "shown.bs.modal", ->
+    $('#public-key').select().focus()

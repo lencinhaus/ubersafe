@@ -59,4 +59,9 @@ TODO
 * Show a modal with shared documents when an accepted contact is clicked
 * Correct the "Remove" buttons confirm message with the actual flow and consequences of removing a contact, see NOTES.md
 
+## Signup
+
+* Enforce multi-factor password strength: min/max length, min number of uppercase, lowercase, numbers and punctuation. All these thresholds should be configurable in `Meteor.settings`.
+* A popover showing which password requirements have/haven't been met would be nice.
+
 

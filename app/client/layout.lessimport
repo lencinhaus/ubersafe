@@ -12,3 +12,15 @@
     z-index: @zindex-navbar-fixed + 1;
   }
 }
+
+#modal-public-key .modal-dialog {
+  width: 300px;
+}
+
+#public-key {
+  font-family: @font-family-monospace;
+  line-height: @line-height-base;
+  width: auto;
+  margin: 0 auto;
+  overflow: hidden;
+}

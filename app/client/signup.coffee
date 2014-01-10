@@ -55,7 +55,7 @@ Template.signup.events
         email: $("#input-signup-email").val()
         password: password
         ubersafe:
-          keys: UberSafe.generateKeys()
+          keys: UberSafe.generateUserKeys()
 
       # create the user
       Accounts.createUser user, (error) ->
