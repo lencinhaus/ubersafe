@@ -19,7 +19,7 @@ Template.signup.rendered = ->
         priority: 64
 
     messages:
-      unique: __ "signup.from.validation.unique"
+      unique: __ "signup.form.validation.unique"
 
   $("#form-signup").parsley("destroy").parsley parsleyOptions
 
