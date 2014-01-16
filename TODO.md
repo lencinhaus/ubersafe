@@ -64,4 +64,14 @@ TODO
 * Enforce multi-factor password strength: min/max length, min number of uppercase, lowercase, numbers and punctuation. All these thresholds should be configurable in `Meteor.settings`.
 * A popover showing which password requirements have/haven't been met would be nice.
 
+## Administration
+
+* Add an administration area, with the following possible features:
+	* Separate management of administrator users
+	* Management of app users: 
+		* Add options to Meteor.settings to enable/disable automatic acceptance of user signup, user space quota, maximum number of users etc.
+		* When user signup is not automatic, allow per-user acceptance
+		* Allow editing and deleting users
+	* Management of broadcast notifications
+
 
