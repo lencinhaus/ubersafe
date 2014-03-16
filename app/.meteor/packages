@@ -17,7 +17,6 @@ accounts-password
 spin
 flash-messages
 i18n
-font-awesome-4
 cookie
 parsleyjs-promises
 sjcl
@@ -28,3 +27,4 @@ nprogress
 ejson
 marked
 selectize
+font-awesome-4-less

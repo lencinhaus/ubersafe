@@ -18,9 +18,9 @@ class @DashboardController extends RouteController
 
   data: ->
     if @ready()
-      documents: Documents.find {},
+      documents: Documents.find({},
         sort: Session.get "dashboardDocumentsSort"
-      .fetch()
+      ).fetch()
     else
       @stop()
       return

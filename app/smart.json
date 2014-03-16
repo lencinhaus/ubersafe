@@ -5,10 +5,10 @@
     "spin": {},
     "flash-messages": {},
     "i18n": {},
-    "font-awesome-4": {},
     "cookie": {},
     "moment": {},
     "nprogress": {},
-    "marked": {}
+    "marked": {},
+    "font-awesome-4-less": {}
   }
 }
