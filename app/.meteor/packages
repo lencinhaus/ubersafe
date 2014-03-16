@@ -9,7 +9,6 @@ iron-router
 underscore
 coffeescript
 bootstrap3-less
-force-ssl
 jquery
 less
 accounts-base
